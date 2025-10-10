@@ -1,7 +1,4 @@
-/* ==========================================
-   HERO SECTION
-   ========================================== */
-
+/* Hero Section */
 .hero {
     height: 100vh;
     position: relative;
@@ -9,7 +6,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--warm-white) 100%);
+    background-image: url('/img/WhatsApp_Image_2025-09-08_at_4.24.17_PM_2_dlveg5.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero-video {
@@ -34,9 +34,9 @@
     height: 100%;
     background: linear-gradient(
         to bottom,
-        rgba(245, 242, 237, 0.3) 0%,
-        rgba(245, 242, 237, 0.5) 50%,
-        rgba(245, 242, 237, 0.7) 100%
+        rgba(245, 242, 237, 0.1) 0%,
+        rgba(245, 242, 237, 0.3) 50%,
+        rgba(245, 242, 237, 0.5) 100%
     );
     z-index: -1;
 }
@@ -87,21 +87,13 @@
 }
 
 @-webkit-keyframes pulse {
-    0%, 100% { 
-        opacity: 1; 
-    }
-    50% { 
-        opacity: 0.7; 
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 @keyframes pulse {
-    0%, 100% { 
-        opacity: 1; 
-    }
-    50% { 
-        opacity: 0.7; 
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .hero-title {
@@ -136,6 +128,8 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
+
 
 .btn-primary {
     background: var(--charcoal);
@@ -178,10 +172,7 @@
     transform: translateY(-3px);
 }
 
-/* ==========================================
-   COUNTDOWN SECTION
-   ========================================== */
-
+/* Countdown Section */
 .countdown-section {
     padding: 80px 5%;
     background: var(--charcoal);
@@ -193,7 +184,6 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 42px;
     margin-bottom: 10px;
-    font-weight: 300;
 }
 
 .countdown-subtitle {
@@ -253,107 +243,17 @@
     height: 100%;
     background: linear-gradient(90deg, var(--primary-gold), var(--dark-gold));
     border-radius: 4px;
-    width: 14%;
+    width: 22%;
     -webkit-animation: progressGrow 2s ease;
             animation: progressGrow 2s ease;
 }
 
 @-webkit-keyframes progressGrow {
-    from { 
-        width: 0; 
-    }
-    to { 
-        width: 14%; 
-    }
+    from { width: 0; }
+    to { width: 22%; }
 }
 
 @keyframes progressGrow {
-    from { 
-        width: 0; 
-    }
-    to { 
-        width: 14%; 
-    }
-}
-
-/* ==========================================
-   RESPONSIVE - HERO & COUNTDOWN
-   ========================================== */
-
-@media (max-width: 768px) {
-    .hero {
-        height: auto;
-        min-height: 100vh;
-        padding: 120px 0 60px;
-    }
-
-    .hero-title {
-        font-size: 42px;
-    }
-
-    .hero-subtitle {
-        font-size: 20px;
-    }
-
-    .hero-description {
-        font-size: 14px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-        width: 100%;
-        max-width: 300px;
-    }
-
-    .countdown-section {
-        padding: 60px 5%;
-    }
-
-    .countdown-title {
-        font-size: 32px;
-    }
-
-    .countdown-timer {
-        gap: 20px;
-    }
-
-    .countdown-number {
-        font-size: 36px;
-    }
-
-    .countdown-label {
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 32px;
-    }
-
-    .hero-subtitle {
-        font-size: 18px;
-    }
-
-    .hero-badge {
-        font-size: 10px;
-        padding: 6px 15px;
-    }
-
-    .countdown-timer {
-        gap: 15px;
-    }
-
-    .countdown-item {
-        min-width: 70px;
-    }
-
-    .countdown-number {
-        font-size: 28px;
-    }
+    from { width: 0; }
+    to { width: 22%; }
 }

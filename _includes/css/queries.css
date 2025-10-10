@@ -1,0 +1,101 @@
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .hero-title {
+        font-size: 42px;
+    }
+
+    .hero-subtitle {
+        font-size: 20px;
+    }
+
+    .form-group {
+        grid-template-columns: 1fr;
+    }
+
+    .form-input {
+        grid-column: span 1;
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 36px;
+    }
+
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+
+    .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .whatsapp-tooltip {
+        display: none;
+    }
+
+    .scroll-to-top {
+        bottom: 90px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .scroll-to-top svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .floating-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .floating-image:nth-child(1) {
+        top: 15%;
+        left: 5%;
+    }
+    
+    .floating-image:nth-child(2) {
+        top: 70%;
+        right: 5%;
+    }
+
+    .footer {
+        padding: 60px 5% 30px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-legal-links {
+        justify-content: center;
+    }
+    
+    .footer-cta {
+        align-self: center;
+    }
+}
+

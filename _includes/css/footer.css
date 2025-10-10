@@ -176,29 +176,3 @@
 .footer-legal-links .separator {
     color: rgba(255, 255, 255, 0.3);
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .footer {
-        padding: 60px 5% 30px;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        margin-bottom: 40px;
-    }
-    
-    .footer-legal {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .footer-legal-links {
-        justify-content: center;
-    }
-    
-    .footer-cta {
-        align-self: center;
-    }
-}
