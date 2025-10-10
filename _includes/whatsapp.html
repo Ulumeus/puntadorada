@@ -1,0 +1,23 @@
+{% assign current_lang = page.lang | default: site.default_lang | default: "es" %}
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/{{ site.contact.whatsapp }}?text={{ site.whatsapp[current_lang].default | url_encode }}" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   class="whatsapp-float" 
+   aria-label="{% if current_lang == 'en' %}Contact us on WhatsApp{% else %}Contáctanos por WhatsApp{% endif %}"
+   title="{% if current_lang == 'en' %}Chat with us{% else %}Chatea con nosotros{% endif %}">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <!-- Degradado dorado de Punta Dorada -->
+            <linearGradient id="whatsappGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#e0d7c8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#f1ebe3;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <path fill="url(#whatsappGoldGradient)" d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.961 0-7.384 6.003-13.387 13.387-13.387s13.387 6.003 13.387 13.387c0 7.384-6.003 13.387-13.387 13.387zM21.826 18.585c-0.288-0.146-1.713-0.85-1.979-0.947-0.267-0.097-0.461-0.146-0.655 0.146s-0.753 0.947-0.923 1.141c-0.17 0.194-0.34 0.218-0.628 0.073s-1.226-0.452-2.334-1.44c-0.862-0.77-1.444-1.721-1.614-2.009s-0.018-0.447 0.128-0.592c0.131-0.131 0.291-0.34 0.437-0.509s0.194-0.291 0.291-0.485c0.097-0.194 0.049-0.364-0.024-0.509s-0.655-1.579-0.898-2.162c-0.236-0.567-0.476-0.49-0.655-0.499-0.17-0.008-0.364-0.010-0.558-0.010s-0.509 0.073-0.776 0.364c-0.267 0.291-1.019 0.996-1.019 2.428s1.043 2.817 1.188 3.011c0.146 0.194 2.058 3.138 4.983 4.401 0.696 0.301 1.239 0.481 1.663 0.616 0.699 0.223 1.336 0.191 1.839 0.116 0.561-0.084 1.713-0.7 1.955-1.377s0.242-1.257 0.17-1.377c-0.073-0.121-0.267-0.194-0.558-0.34z"/>
+    </svg>
+    <span class="whatsapp-tooltip">
+        {% if current_lang == 'en' %}Chat with us{% else %}Chatea con nosotros{% endif %}
+    </span>
+</a>

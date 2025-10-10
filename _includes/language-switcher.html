@@ -1,0 +1,19 @@
+{% assign current_lang = page.lang | default: site.default_lang | default: "es" %}
+
+<div class="language-switcher">
+    {% if current_lang == "es" %}
+        <a href="/en{{ page.url | remove: '/es' }}" 
+           class="lang-link" 
+           title="Switch to English"
+           hreflang="en">
+            EN
+        </a>
+    {% else %}
+        <a href="/es{{ page.url | remove: '/en' }}" 
+           class="lang-link" 
+           title="Cambiar a Español"
+           hreflang="es">
+            ES
+        </a>
+    {% endif %}
+</div>

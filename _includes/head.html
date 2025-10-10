@@ -1,0 +1,213 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+<!-- Título optimizado bilingüe -->
+<title>
+  {% if current_lang == "es" %}
+    {% if page.title %}{{ page.title }}{% else %}Punta Dorada - Lotes Exclusivos en Barú, Cartagena{% endif %}
+  {% else %}
+    {% if page.title %}{{ page.title }}{% else %}Punta Dorada - Exclusive Lots in Barú, Cartagena{% endif %}
+  {% endif %}
+</title>
+
+<!-- Meta descripción optimizada -->
+<meta name="description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines }}{% else %}{% if current_lang == 'es' %}{{ site.site_meta.description.es }}{% else %}{{ site.site_meta.description.en }}{% endif %}{% endif %}">
+<meta name="robots" content="{% if page.noindex %}noindex, nofollow{% elsif page.sitemap == false %}noindex, follow{% else %}index, follow{% endif %}">
+
+<!-- Meta tags de seguridad -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<!-- Meta tags de localización -->
+<meta name="language" content="{% if current_lang == 'es' %}es-CO{% else %}en-CO{% endif %}">
+<meta name="country" content="COL">
+<meta name="geo.region" content="CO-BOL">
+<meta name="geo.placename" content="Barú, Cartagena">
+<meta name="geo.position" content="10.2225;-75.5975">
+<meta name="ICBM" content="10.2225, -75.5975">
+
+<!-- Meta tags de autoría y copyright -->
+<meta name="author" content="{% if page.autor %}{{ page.autor }}{% else %}Punta Dorada{% endif %}">
+<meta name="copyright" content="{% if page.copyright %}{{ page.copyright }}{% else %}Punta Dorada{% endif %}">
+<meta name="owner" content="Punta Dorada">
+<meta name="theme-color" content="#C4A572">
+<meta name="generator" content="Jekyll {{ jekyll.version }}">
+
+<!-- Manejo de idiomas y URLs canónicas -->
+{% assign pages_es = site.pages | where: "ref", page.ref | where: "lang", "es" %}
+{% assign pages_en = site.pages | where: "ref", page.ref | where: "lang", "en" %}
+{% assign posts_es = site.posts | where: "ref", page.ref | where: "lang", "es" %}
+{% assign posts_en = site.posts | where: "ref", page.ref | where: "lang", "en" %}
+{% assign lotes_es = site.lotes | where: "ref", page.ref %}
+{% assign lots_en = site.lots | where: "ref", page.ref %}
+{% assign all_translations = pages_es | concat: pages_en | concat: posts_es | concat: posts_en | concat: lotes_es | concat: lots_en %}
+
+<!-- Canonical URL -->
+{% if page.layout == "redirections" %}
+  <link rel="canonical" href="{{ page.redireccion | absolute_url }}">
+{% elsif page.canonical %}
+  {% if page.canonical contains "puntadorada.com" and page.canonical contains "https://www." %}
+    <link rel="canonical" href="{{ page.canonical }}">
+  {% elsif page.canonical contains "puntadorada.com" %}
+    {% assign fixed_canonical = page.canonical | replace: "https://puntadorada.com", "https://www.puntadorada.com" %}
+    <link rel="canonical" href="{{ fixed_canonical }}">
+  {% else %}
+    <link rel="canonical" href="{{ page.canonical }}">
+  {% endif %}
+{% else %}
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% endif %}
+
+<!-- Hreflang para SEO internacional -->
+{% if page.ref %}
+  <!-- Self-reference -->
+  <link rel="alternate" hreflang="{{ page.lang | default: 'es' }}" href="{{ site.url }}{{ page.url }}">
+  
+  <!-- Buscar traducciones -->
+  {% assign all_pages = site.pages | concat: site.posts | concat: site.lotes | concat: site.lots %}
+  {% assign translations = all_pages | where: "ref", page.ref %}
+  
+  {% for translation in translations %}
+    {% unless translation.lang == page.lang %}
+      {% if translation.url and translation.lang %}
+        <link rel="alternate" hreflang="{{ translation.lang }}" href="{{ site.url }}{{ translation.url }}">
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+  
+  <!-- x-default -->
+  {% assign default_page = translations | where: "lang", "es" | first %}
+  {% if default_page and default_page.url %}
+    <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ default_page.url }}">
+  {% elsif page.lang == "es" %}
+    <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ page.url }}">
+  {% else %}
+    <link rel="alternate" hreflang="x-default" href="{{ site.url }}/es/">
+  {% endif %}
+{% else %}
+  <!-- Páginas principales sin ref -->
+  {% if page.url == '/es/' or page.url == '/' %}
+    <link rel="alternate" hreflang="es" href="{{ site.url }}/es/">
+    <link rel="alternate" hreflang="en" href="{{ site.url }}/en/">
+    <link rel="alternate" hreflang="x-default" href="{{ site.url }}/es/">
+  {% elsif page.url == '/en/' %}
+    <link rel="alternate" hreflang="es" href="{{ site.url }}/es/">
+    <link rel="alternate" hreflang="en" href="{{ site.url }}/en/">
+    <link rel="alternate" hreflang="x-default" href="{{ site.url }}/es/">
+  {% endif %}
+{% endif %}
+
+<!-- RSS Feeds bilingües -->
+<link rel="alternate" type="application/rss+xml" title="Punta Dorada ES" href="{{ site.url }}/es/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Punta Dorada EN" href="{{ site.url }}/en/feed.xml">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ site.url }}/sitemap.xml">
+
+<!-- Meta tags específicos para artículos -->
+{% if page.layout == 'post' %}
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+<meta property="article:modified_time" content="{% if page.dateModified %}{{ page.dateModified | date_to_xmlschema }}{% elsif page.last_modified_at %}{{ page.last_modified_at | date_to_xmlschema }}{% else %}{{ page.date | date_to_xmlschema }}{% endif %}">
+<meta property="article:author" content="{{ site.url }}/{{ page.lang | default: 'es' }}/nosotros/">
+<meta property="article:section" content="{{ page.category | first }}">
+{% for tag in page.tags %}
+<meta property="article:tag" content="{{ tag }}">
+{% endfor %}
+{% endif %}
+
+<!-- Open Graph -->
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:title" content="{% if page.h1 %}{{ page.h1 | strip_html }}{% else %}{{ page.title }}{% endif %}">
+<meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{% if current_lang == 'es' %}{{ site.site_meta.description.es }}{% else %}{{ site.site_meta.description.en }}{% endif %}{% endif %}">
+
+<!-- Imagen Open Graph -->
+{% if page.image %}
+<meta property="og:image" content="{{ page.image | absolute_url }}">
+{% else %}
+<meta property="og:image" content="{{ '/img/punta-dorada-og.jpg' | absolute_url }}">
+{% endif %}
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{% if page.alt %}{{ page.alt }}{% else %}{{ page.title }}{% endif %}">
+<meta property="og:locale" content="{% if current_lang == 'es' %}es_CO{% else %}en_US{% endif %}">
+<meta property="og:site_name" content="Punta Dorada - {% if current_lang == 'es' %}Lotes Exclusivos Barú{% else %}Exclusive Lots Barú{% endif %}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@puntadorada">
+<meta name="twitter:creator" content="@puntadorada">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{% if current_lang == 'es' %}{{ site.site_meta.description.es }}{% else %}{{ site.site_meta.description.en }}{% endif %}{% endif %}">
+{% if page.image %}
+<meta name="twitter:image" content="{{ page.image | absolute_url }}">
+{% else %}
+<meta name="twitter:image" content="{{ '/img/punta-dorada-og.jpg' | absolute_url }}">
+{% endif %}
+<meta name="twitter:image:alt" content="{% if page.alt %}{{ page.alt }}{% else %}{{ page.title }}{% endif %}">
+
+<!-- Favicon -->
+<link rel="icon" href="{{ 'img/favicon/favicon.ico' | relative_url }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ 'img/favicon/favicon.ico' | relative_url }}" type="image/x-icon">
+<link rel="apple-touch-icon" href="{{ 'img/favicon/apple-touch-icon.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ 'img/favicon/apple-touch-icon-180x180.png' | relative_url }}">
+
+<!-- PWA manifest -->
+<link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+
+<!-- DNS Prefetch y Preconnect -->
+{% if jekyll.environment == "production" %}
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% endif %}
+
+<!-- Fuentes Google -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CSS Principal -->
+<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXXXX');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Schema JSON-LD -->
+{% if page.layout == 'default' and page.url contains '/es/' or page.url contains '/en/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "Punta Dorada",
+  "description": "{% if current_lang == 'es' %}59 lotes exclusivos en la zona más virgen de Barú, Cartagena. Desarrollo inmobiliario con título de propiedad individual{% else %}59 exclusive lots in the most pristine area of Barú, Cartagena. Real estate development with individual property title{% endif %}",
+  "url": "{{ site.url }}",
+  "logo": "{{ '/img/logo-punta-dorada.png' | absolute_url }}",
+  "image": "{{ '/img/punta-dorada-aerial.jpg' | absolute_url }}",
+  "telephone": "{{ site.contact.whatsapp_display }}",
+  "email": "{{ site.contact.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Barú",
+    "addressRegion": "Bolívar",
+    "addressCountry": "CO"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "10.2225",
+    "longitude": "-75.5975"
+  },
+  "priceRange": "$250M-$315M COP",
+  "areaServed": {
+    "@type": "City",
+    "name": "Cartagena"
+  }
+}
+</script>
+{% endif %}

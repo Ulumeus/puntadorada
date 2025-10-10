@@ -1,0 +1,176 @@
+# Configuración principal Punta Dorada
+baseurl: ''
+url: 'https://www.puntadorada.com'
+name: Punta Dorada
+author: Punta Dorada
+
+# Configuración multiidioma
+default_lang: es
+languages: ["es", "en"]
+
+# Información de contacto
+contact:
+  address: "Barú, Cartagena, Colombia"
+  whatsapp: "573001234567"
+  whatsapp_display: "+57 300 123 4567"
+  phone: "6051234567"
+  email: "contacto@puntadorada.com"
+
+# Redes sociales
+social:
+  facebook: "https://www.facebook.com/puntadoradabaru"
+  instagram: "https://www.instagram.com/puntadorada"
+  maps: "https://maps.google.com/?q=Punta+Dorada+Baru"
+
+# Títulos y descripciones por idioma
+site_meta:
+  title:
+    es: "Punta Dorada - Lotes Exclusivos en Barú, Cartagena"
+    en: "Punta Dorada - Exclusive Lots in Barú, Cartagena"
+  description:
+    es: "59 lotes exclusivos en la zona más virgen de Barú. Adquiere tu lote con título de propiedad individual y construye tu cabaña de bienestar con diseños modulares de 32m² hasta 128m²."
+    en: "59 exclusive lots in the most pristine area of Barú. Acquire your lot with individual property title and build your wellness cabin with modular designs from 32m² to 128m²."
+
+# Configuración Jekyll
+markdown: kramdown
+highlighter: rouge
+encoding: utf-8
+strict_front_matter: true
+
+# Archivos a mantener en GitHub Pages
+keep_files: [".well-known", "sitemap*.xml"]
+
+# Procesamiento y exclusiones
+exclude:
+  - "*.tmp"
+  - "*.bak"
+  - "Gemfile*"
+  - "README.md"
+  - "LICENSE"
+  - "node_modules"
+  - "package*.json"
+  - ".sass-cache"
+  - ".jekyll-cache"
+
+# Configuración de permalinks
+permalink: /:slug/
+
+# Configuración de compresión HTML
+compress_html:
+  clippings: []
+  comments: []
+  endings: []
+  ignore:
+    envs: ["development"]
+    paths: ["sitemap*.xml", "*.xml", "/sitemap*.xml"]
+  blanklines: false
+  profile: false
+  startings: []
+
+# Colecciones
+collections:
+  redirects:
+    output: true
+  lotes:
+    output: true
+    permalink: /es/:path/
+  lots:
+    output: true
+    permalink: /en/:path/
+
+# Configuración por defecto
+defaults:
+  # Global
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+      image: "/img/punta-dorada-og.jpg"
+  
+  # EXCLUIR XML DE PROCESAMIENTO GLOBAL
+  - scope:
+      path: "sitemap*.xml"
+    values:
+      layout: none
+      sitemap: false
+  
+  # Páginas español
+  - scope:
+      path: "es"
+    values:
+      lang: "es"
+      layout: "main"
+  
+  # Páginas inglés
+  - scope:
+      path: "en"
+    values:
+      lang: "en"
+      layout: "main"
+  
+  # Posts español
+  - scope:
+      path: "_posts/es"
+    values:
+      layout: "post"
+      lang: "es"
+      permalink: /es/blog/:slug/
+      categories: ["blog"]
+  
+  # Posts inglés
+  - scope:
+      path: "_posts/en"
+    values:
+      layout: "post"
+      lang: "en"
+      permalink: /en/blog/:slug/
+      categories: ["blog"]
+  
+  # Lotes español
+  - scope:
+      path: ""
+      type: "lotes"
+    values:
+      layout: "lote"
+      lang: "es"
+      categories: ["lotes"]
+  
+  # Lots inglés
+  - scope:
+      path: ""
+      type: "lots"
+    values:
+      layout: "lot"
+      lang: "en"
+      categories: ["lots"]
+
+# WhatsApp mensajes por idioma
+whatsapp:
+  es:
+    default: "Hola! Me gustaría recibir más información sobre los lotes en Punta Dorada. Gracias 😊"
+    reservation: "Hola, me interesa reservar un lote en Punta Dorada. ¿Podrían ayudarme con información y disponibilidad?"
+    pricing: "Hola, me gustaría conocer más detalles sobre precios y planes de pago. Gracias."
+    visit: "Hola, me interesa agendar una visita al proyecto. ¿Cuándo hay disponibilidad?"
+  en:
+    default: "Hello! I would like to receive more information about the lots at Punta Dorada. Thank you 😊"
+    reservation: "Hello, I'm interested in reserving a lot at Punta Dorada. Could you help me with information and availability?"
+    pricing: "Hello, I would like to know more details about prices and payment plans. Thank you."
+    visit: "Hello, I'm interested in scheduling a visit to the project. When is there availability?"
+
+# Configuración SEO
+seo:
+  type: "RealEstateAgent"
+  name: "Punta Dorada"
+  logo: "/img/logo-punta-dorada.png"
+  same_as:
+    - "https://www.facebook.com/puntadoradabaru"
+    - "https://www.instagram.com/puntadorada"
+
+# Información del proyecto
+project:
+  total_lots: 59
+  reserved_lots: 8
+  available_lots: 51
+  launch_date: "2024-10-10"
+  delivery_estimate: "2026"
+  location: "Barú, Cartagena, Colombia"

@@ -1,0 +1,109 @@
+{
+  "name": "Punta Dorada - Lotes Exclusivos en Barú",
+  "short_name": "Punta Dorada",
+  "description": "59 lotes exclusivos en la zona más virgen de Barú, Cartagena. Adquiere tu lote con título de propiedad individual.",
+  "start_url": "/es/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FDFBF7",
+  "theme_color": "#C4A572",
+  "orientation": "portrait-primary",
+  "dir": "ltr",
+  "lang": "es-CO",
+  "categories": ["real-estate", "lifestyle", "travel"],
+  "icons": [
+    {
+      "src": "/img/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/favicon/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/screenshots/desktop-1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Vista principal de Punta Dorada"
+    },
+    {
+      "src": "/img/screenshots/mobile-1.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "label": "Punta Dorada en móvil"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver Lotes",
+      "short_name": "Lotes",
+      "description": "Explorar lotes disponibles",
+      "url": "/es/#pricing",
+      "icons": [
+        {
+          "src": "/img/icons/lots-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Reservar",
+      "short_name": "Reservar",
+      "description": "Reservar tu lote",
+      "url": "/es/#reservar",
+      "icons": [
+        {
+          "src": "/img/icons/reserve-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Contacto",
+      "short_name": "Contacto",
+      "description": "Contactar con Punta Dorada",
+      "url": "/es/#contacto",
+      "icons": [
+        {
+          "src": "/img/icons/contact-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "share_target": {
+    "action": "/es/",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

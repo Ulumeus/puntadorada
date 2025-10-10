@@ -1,0 +1,32 @@
+/* Language Switcher */
+.language-switcher {
+    display: inline-block;
+}
+
+.lang-link {
+    color: var(--charcoal);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    padding: 8px 16px;
+    border: 2px solid var(--primary-gold);
+    border-radius: 20px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.lang-link:hover {
+    background: var(--primary-gold);
+    color: white;
+}
+
+/* Para mobile menu */
+.mobile-menu .language-switcher {
+    display: block;
+    text-align: center;
+}
+
+.mobile-menu .lang-link {
+    display: inline-block;
+}

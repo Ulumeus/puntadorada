@@ -1,0 +1,160 @@
+/* ==========================================
+   WHATSAPP FLOAT BUTTON
+   ========================================== */
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(196, 165, 114, 0.3);
+    z-index: 999;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(100px);
+    text-decoration: none;
+}
+
+.whatsapp-float.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 30px rgba(196, 165, 114, 0.6);
+}
+
+.whatsapp-float svg {
+    width: 32px;
+    height: 32px;
+}
+
+.whatsapp-tooltip {
+    position: absolute;
+    right: 70px;
+    background: var(--charcoal);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
+}
+
+/* Animación de pulso */
+@-webkit-keyframes whatsappPulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(196, 165, 114, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(196, 165, 114, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(196, 165, 114, 0.3);
+    }
+}
+@keyframes whatsappPulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(196, 165, 114, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(196, 165, 114, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(196, 165, 114, 0.3);
+    }
+}
+
+.whatsapp-float.visible {
+    -webkit-animation: whatsappPulse 2s infinite;
+            animation: whatsappPulse 2s infinite;
+}
+
+/* ==========================================
+   SCROLL TO TOP BUTTON - MEJORADO
+   ========================================== */
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(196, 165, 114, 0.3);
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.3s ease;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(196, 165, 114, 0.6);
+}
+
+.scroll-to-top svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s;
+}
+
+.scroll-to-top:hover svg {
+    transform: translateY(-3px);
+}
+
+/* Ajustar posición en móvil */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+
+    .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .whatsapp-tooltip {
+        display: none;
+    }
+
+    .scroll-to-top {
+        bottom: 90px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .scroll-to-top svg {
+        width: 20px;
+        height: 20px;
+    }
+}

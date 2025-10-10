@@ -1,0 +1,11 @@
+---
+layout: compress
+---
+
+{% include css/main.css %}
+{% include css/stwicher.css %}
+{% include css/header.css %}
+{% include css/pages.css %}
+{% include css/footer.css %}
+
+

@@ -1,0 +1,133 @@
+{% assign current_lang = page.lang | default: site.default_lang | default: "es" %}
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- Logo y descripción -->
+            <div class="footer-section footer-about">
+                <a href="/{{ current_lang }}/" class="footer-logo" title="{% if current_lang == 'en' %}Punta Dorada Home{% else %}Inicio Punta Dorada{% endif %}">
+                    <svg viewBox="0 0 200 80" width="200" height="80">
+                        <text x="50%" y="40%" text-anchor="middle" dy=".3em" fill="#C4A572" font-family="Cormorant Garamond" font-size="20" font-weight="400">PUNTA DORADA</text>
+                        <text x="50%" y="65%" text-anchor="middle" dy=".3em" fill="#C4A572" font-family="Montserrat" font-size="7" letter-spacing="2">BARÚ CARTAGENA</text>
+                    </svg>
+                </a>
+                <p class="footer-description">
+                    {% if current_lang == 'en' %}
+                        59 exclusive lots in the most pristine area of Barú. Your private lot in the Colombian Caribbean with individual property title.
+                    {% else %}
+                        59 lotes exclusivos en la zona más virgen de Barú. Tu lote privado en el Caribe colombiano con título de propiedad individual.
+                    {% endif %}
+                </p>
+                
+                <!-- Redes sociales -->
+                <div class="footer-social">
+                    {% if site.social.facebook %}
+                    <a href="{{ site.social.facebook }}" target="_blank" rel="noopener noreferrer" class="social-link" title="{% if current_lang == 'en' %}Follow us on Facebook{% else %}Síguenos en Facebook{% endif %}" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                    
+                    {% if site.social.instagram %}
+                    <a href="{{ site.social.instagram }}" target="_blank" rel="noopener noreferrer" class="social-link" title="{% if current_lang == 'en' %}Follow us on Instagram{% else %}Síguenos en Instagram{% endif %}" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                        </svg>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Enlaces rápidos -->
+            <div class="footer-section footer-links">
+                <h3 class="footer-title">
+                    {% if current_lang == 'en' %}Quick Links{% else %}Enlaces Rápidos{% endif %}
+                </h3>
+                <ul class="footer-menu">
+                    <li><a href="/{{ current_lang }}/#concept">{% if current_lang == 'en' %}Concept{% else %}Concepto{% endif %}</a></li>
+                    <li><a href="/{{ current_lang }}/#pricing">{% if current_lang == 'en' %}Lots{% else %}Lotes{% endif %}</a></li>
+                    <li><a href="/{{ current_lang }}/#designs">{% if current_lang == 'en' %}Designs{% else %}Diseños{% endif %}</a></li>
+                    <li><a href="/{{ current_lang }}/#experiences">{% if current_lang == 'en' %}Experiences{% else %}Experiencias{% endif %}</a></li>
+                    <li><a href="/{{ current_lang }}/#faq">FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- Información del proyecto -->
+            <div class="footer-section footer-info">
+                <h3 class="footer-title">
+                    {% if current_lang == 'en' %}Project{% else %}Proyecto{% endif %}
+                </h3>
+                <ul class="footer-menu">
+                    <li>
+                        <strong>{% if current_lang == 'en' %}Location:{% else %}Ubicación:{% endif %}</strong>
+                        <span>Barú, Cartagena</span>
+                    </li>
+                    <li>
+                        <strong>{% if current_lang == 'en' %}Total Lots:{% else %}Total Lotes:{% endif %}</strong>
+                        <span>59</span>
+                    </li>
+                    <li>
+                        <strong>{% if current_lang == 'en' %}Available:{% else %}Disponibles:{% endif %}</strong>
+                        <span>51</span>
+                    </li>
+                    <li>
+                        <strong>{% if current_lang == 'en' %}Lot Sizes:{% else %}Tamaños:{% endif %}</strong>
+                        <span>150-200m²</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-section footer-contact">
+                <h3 class="footer-title">
+                    {% if current_lang == 'en' %}Contact{% else %}Contacto{% endif %}
+                </h3>
+                <ul class="footer-menu">
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                        </svg>
+                        <a href="tel:{{ site.contact.whatsapp }}">{{ site.contact.whatsapp_display }}</a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                        </svg>
+                        <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
+                        <span>Barú, Cartagena, Colombia</span>
+                    </li>
+                </ul>
+                
+                <a href="/{{ current_lang }}/#{% if current_lang == 'en' %}reserve{% else %}reservar{% endif %}" class="footer-cta">
+                    {% if current_lang == 'en' %}Reserve Your Lot{% else %}Reserva tu Lote{% endif %}
+                </a>
+            </div>
+        </div>
+
+        <!-- Copyright y legal -->
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p class="footer-copyright">
+                    &copy; {{ 'now' | date: "%Y" }} Punta Dorada. 
+                    {% if current_lang == 'en' %}All rights reserved{% else %}Todos los derechos reservados{% endif %}.
+                </p>
+                <div class="footer-legal-links">
+                    <a href="/{{ current_lang }}/{% if current_lang == 'en' %}privacy-policy{% else %}politica-privacidad{% endif %}/">
+                        {% if current_lang == 'en' %}Privacy Policy{% else %}Política de Privacidad{% endif %}
+                    </a>
+                    <span class="separator">|</span>
+                    <a href="/{{ current_lang }}/{% if current_lang == 'en' %}terms-conditions{% else %}terminos-condiciones{% endif %}/">
+                        {% if current_lang == 'en' %}Terms & Conditions{% else %}Términos y Condiciones{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

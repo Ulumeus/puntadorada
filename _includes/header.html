@@ -1,0 +1,95 @@
+{% assign current_lang = page.lang | default: site.default_lang | default: "es" %}
+
+<!-- Hero Section -->
+<section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-tropical-beach-7069/1080p.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            {% if current_lang == 'en' %}
+                59 LOTS LAUNCHING • FIRST PHASE
+            {% else %}
+                59 LOTES EN LANZAMIENTO • PRIMERA ETAPA
+            {% endif %}
+        </div>
+        <h1 class="hero-title">
+            {% if current_lang == 'en' %}
+                Where the sea turns down the volume<br>and you return to yourself
+            {% else %}
+                Donde el mar baja el volumen<br>y vuelves a ti
+            {% endif %}
+        </h1>
+        <p class="hero-subtitle">
+            {% if current_lang == 'en' %}
+                Exclusive lots in Barú, Cartagena
+            {% else %}
+                Lotes exclusivos en Barú, Cartagena
+            {% endif %}
+        </p>
+        <p class="hero-description">
+            {% if current_lang == 'en' %}
+                Acquire your lot with individual property title.<br>
+                Build from 32m² to 128m² with flexible modular designs.
+            {% else %}
+                Adquiere tu lote con título de propiedad individual.<br>
+                Construye desde 32m² hasta 128m² con diseños modulares flexibles.
+            {% endif %}
+        </p>
+        {% include buttons.html %}
+    </div>
+</section>
+
+<!-- Countdown Section -->
+<section class="countdown-section">
+    <div class="container">
+        <h2 class="countdown-title">
+            {% if current_lang == 'en' %}Pre-sale First Phase{% else %}Pre-venta Primera Etapa{% endif %}
+        </h2>
+        <p class="countdown-subtitle">
+            {% if current_lang == 'en' %}
+                59 EXCLUSIVE LOTS • 8 ALREADY RESERVED
+            {% else %}
+                59 LOTES EXCLUSIVOS • 8 YA RESERVADOS
+            {% endif %}
+        </p>
+        <div class="countdown-timer">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">45</span>
+                <span class="countdown-label">
+                    {% if current_lang == 'en' %}Days{% else %}Días{% endif %}
+                </span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">12</span>
+                <span class="countdown-label">
+                    {% if current_lang == 'en' %}Hours{% else %}Horas{% endif %}
+                </span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">37</span>
+                <span class="countdown-label">
+                    {% if current_lang == 'en' %}Minutes{% else %}Minutos{% endif %}
+                </span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">28</span>
+                <span class="countdown-label">
+                    {% if current_lang == 'en' %}Seconds{% else %}Segundos{% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>
+                    {% if current_lang == 'en' %}Reserved Lots{% else %}Lotes Reservados{% endif %}
+                </span>
+                <span>8 {% if current_lang == 'en' %}of{% else %}de{% endif %} 59</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 14%;"></div>
+            </div>
+        </div>
+    </div>
+</section>
