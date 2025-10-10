@@ -1,6 +1,6 @@
 # Configuración principal Punta Dorada
 baseurl: ''
-url: 'https://www.puntadorada.com'
+url: 'https://puntadoradabaru.com'
 name: Punta Dorada
 author: Punta Dorada
 
@@ -14,7 +14,7 @@ contact:
   whatsapp: "573001234567"
   whatsapp_display: "+57 300 123 4567"
   phone: "6051234567"
-  email: "contacto@puntadorada.com"
+  email: "contacto@puntadoradabaru.com"
 
 # Redes sociales
 social:
