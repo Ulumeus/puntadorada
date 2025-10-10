@@ -301,31 +301,58 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   
 
 <!-- Hero Section -->
-<section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <div class="hero-badge">
-            
-                59 LOTS LAUNCHING • FIRST PHASE
-            
-        </div>
-        <h1 class="hero-title">
-            
-                Where the sea turns down the volume<br>and you return to yourself
-            
-        </h1>
-        <p class="hero-subtitle">
-            
-                Exclusive lots in Barú, Cartagena
-            
-        </p>
-        <p class="hero-description">
-            
-                Acquire your lot with individual property title.<br>
-                Build from 32m² to 128m² with flexible modular designs.
-            
-        </p>
-        <div class="hero-buttons">
+<section class="hero" id="hero">
+  <div class="hero-video-container">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="/img/hero-poster.jpg"
+      aria-label="Video background of Barú beach"
+    >
+      <!-- WebM para Chrome/Firefox (mejor compresión) -->
+      <source
+        src="/videos/punta-dorada-baru.webm"
+        type="video/webm"
+      />
+      <!-- MP4 para Safari/fallback -->
+      <source
+        src="/videos/punta-dorada-baru.mp4"
+        type="video/mp4"
+      />
+
+      <!-- Fallback para navegadores sin soporte -->
+      <img
+        src="/img/hero-poster.jpg"
+        alt="Barú Beach"
+        class="hero-fallback-img"
+      />
+    </video>
+
+    <!-- Overlay con gradiente -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+       59 LOTS LAUNCHING • FIRST PHASE 
+    </div>
+    <h1 class="hero-title">
+       Where the sea turns down the volume<br />and
+      you return to yourself 
+    </h1>
+    <p class="hero-subtitle">
+       Exclusive lots in Barú, Cartagena 
+    </p>
+    <p class="hero-description">
+       Acquire your lot with individual property
+      title.<br />
+      Build from 32m² to 128m² with flexible modular designs. 
+    </p>
+    <div class="hero-buttons">
     <a href="#reserve" class="btn-primary">
         Reserve Lot
     </a>
@@ -333,60 +360,58 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         Discover More
     </a>
 </div>
-    </div>
-      
+  </div>
 </section>
 
 <!-- Countdown Section -->
 <section class="countdown-section">
-    <div class="container">
-        <h2 class="countdown-title">
-            Pre-sale First Phase
-        </h2>
-        <p class="countdown-subtitle">
-            
-                59 EXCLUSIVE LOTS • 8 ALREADY RESERVED
-            
-        </p>
-        <div class="countdown-timer">
-            <div class="countdown-item">
-                <span class="countdown-number" id="days">45</span>
-                <span class="countdown-label">
-                    Days
-                </span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="hours">12</span>
-                <span class="countdown-label">
-                    Hours
-                </span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="minutes">37</span>
-                <span class="countdown-label">
-                    Minutes
-                </span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="seconds">28</span>
-                <span class="countdown-label">
-                    Seconds
-                </span>
-            </div>
-        </div>
-        <div class="progress-container">
-            <div class="progress-label">
-                <span>
-                    Reserved Lots
-                </span>
-                <span>8 of 59</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 14%;"></div>
-            </div>
-        </div>
+  <div class="container">
+    <h2 class="countdown-title">
+      Pre-sale First Phase
+    </h2>
+    <p class="countdown-subtitle">
+       59 EXCLUSIVE LOTS • 8 ALREADY RESERVED 
+    </p>
+    <div class="countdown-timer">
+      <div class="countdown-item">
+        <span class="countdown-number" id="days">45</span>
+        <span class="countdown-label">
+          Days
+        </span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="hours">12</span>
+        <span class="countdown-label">
+          Hours
+        </span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="minutes">37</span>
+        <span class="countdown-label">
+          Minutes
+        </span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="seconds">28</span>
+        <span class="countdown-label">
+          Seconds
+        </span>
+      </div>
     </div>
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>
+          Reserved Lots
+        </span>
+        <span>8 of 59</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
 </section>
+
   <main id="main-content" role="main">
     <!-- Concept Section -->
 <section class="section fade-in" id="concept" style="background: var(--soft-beige); position: relative;">

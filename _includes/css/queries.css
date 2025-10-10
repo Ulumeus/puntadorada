@@ -16,6 +16,31 @@
         font-size: 20px;
     }
 
+    .hero-video {
+        /* En móvil el video se puede ajustar para usar menos ancho de banda */
+        width: 100vw;
+        height: auto;
+        min-height: 100%;
+    }
+    
+    .hero-overlay {
+        background: 
+            linear-gradient(
+                to bottom,
+                rgb(245 242 237 / 0.15) 0%,
+                rgb(245 242 237 / 0.35) 40%,
+                rgb(245 242 237 / 0.6) 100%
+            );
+    }
+    
+    .hero-title br {
+        display: none; /* Mejor lectura en móvil */
+    }
+    
+    .hero-description br {
+        display: none;
+    }
+    
     .form-group {
         grid-template-columns: 1fr;
     }

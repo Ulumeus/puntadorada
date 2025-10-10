@@ -1,70 +1,77 @@
-/* Hero Section */
+/* Hero Section con Video Background Optimizado */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100svh; /* Para móviles modernos */
     position: relative;
+    display: grid;
+    place-items: center;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('/img/WhatsApp_Image_2025-09-08_at_4.24.17_PM_2_dlveg5.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: var(--charcoal); /* Fallback mientras carga */
+    isolation: isolate; /* Crea nuevo stacking context */
 }
 
+/* Container del Video */
+.hero-video-container {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Video Background */
 .hero-video {
     position: absolute;
     top: 50%;
     left: 50%;
     min-width: 100%;
     min-height: 100%;
-    width: auto;
-    height: auto;
+    width: 100vw;
+    height: 100vh;
     transform: translate(-50%, -50%);
-    z-index: -2;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
+    object-position: center;
 }
 
-.hero-overlay {
+/* Fallback Image si el video no carga */
+.hero-fallback-img {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(245, 242, 237, 0.1) 0%,
-        rgba(245, 242, 237, 0.3) 50%,
-        rgba(245, 242, 237, 0.5) 100%
-    );
-    z-index: -1;
+    object-fit: cover;
+    object-position: center;
 }
 
+/* Overlay Optimizado con Gradiente Moderno */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: 
+        linear-gradient(
+            to bottom,
+            rgb(245 242 237 / 0.05) 0%,
+            rgb(245 242 237 / 0.25) 40%,
+            rgb(245 242 237 / 0.5) 100%
+        );
+    backdrop-filter: blur(1px);
+}
+
+/* Hero Content */
 .hero-content {
+    position: relative;
+    z-index: 2;
     text-align: center;
     color: var(--charcoal);
-    padding: 0 20px;
-    -webkit-animation: heroFadeIn 2s ease;
-            animation: heroFadeIn 2s ease;
-    max-width: 900px;
-}
-
-@-webkit-keyframes heroFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    padding-inline: clamp(1rem, 5vw, 2rem);
+    max-width: min(95%, 900px);
+    animation: heroFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes heroFadeIn {
     from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
@@ -72,96 +79,104 @@
     }
 }
 
+/* Badge con efecto pulse mejorado */
 .hero-badge {
     display: inline-block;
     background: var(--primary-gold);
     color: white;
-    padding: 8px 20px;
+    padding: clamp(6px, 1.5vw, 8px) clamp(15px, 3vw, 20px);
     border-radius: 20px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    margin-bottom: 30px;
+    font-size: clamp(10px, 1.5vw, 12px);
+    letter-spacing: clamp(1px, 0.3vw, 2px);
+    margin-bottom: clamp(20px, 4vw, 30px);
     font-weight: 500;
-    -webkit-animation: pulse 3s infinite;
-            animation: pulse 3s infinite;
+    animation: badgePulse 3s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgb(196 165 114 / 0.3);
 }
 
-@-webkit-keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+@keyframes badgePulse {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
 }
 
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 64px;
+    font-size: clamp(32px, 7vw, 64px);
     font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: clamp(15px, 3vw, 20px);
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgb(253 251 247 / 0.3);
 }
 
 .hero-subtitle {
-    font-size: 24px;
+    font-size: clamp(18px, 3.5vw, 24px);
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    margin-bottom: 30px;
+    margin-bottom: clamp(20px, 4vw, 30px);
     color: var(--primary-gold);
+    text-shadow: 0 2px 10px rgb(253 251 247 / 0.5);
 }
 
 .hero-description {
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: clamp(14px, 2vw, 16px);
+    line-height: 1.7;
     max-width: 600px;
-    margin: 0 auto 40px;
+    margin-inline: auto;
+    margin-bottom: clamp(30px, 5vw, 40px);
     font-weight: 400;
-    color: #666;
+    color: rgb(44 41 38 / 0.9);
+    text-shadow: 0 1px 3px rgb(253 251 247 / 0.8);
 }
 
 .hero-buttons {
     display: flex;
-    gap: 20px;
+    gap: clamp(15px, 3vw, 20px);
     justify-content: center;
     flex-wrap: wrap;
 }
 
-
-
+/* Botones */
 .btn-primary {
     background: var(--charcoal);
     color: white;
-    padding: 15px 40px;
+    padding: clamp(12px, 2vw, 15px) clamp(30px, 5vw, 40px);
     border-radius: 50px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 2px;
-    transition: all 0.3s;
+    font-size: clamp(12px, 1.8vw, 14px);
+    letter-spacing: clamp(1px, 0.3vw, 2px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-block;
     text-transform: uppercase;
-    box-shadow: 0 10px 30px rgba(44, 41, 38, 0.3);
+    box-shadow: 0 10px 30px rgb(44 41 38 / 0.3);
+    border: none;
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
     background: var(--primary-gold);
-    box-shadow: 0 15px 40px rgba(196, 165, 114, 0.4);
+    box-shadow: 0 15px 40px rgb(196 165 114 / 0.5);
 }
 
 .btn-secondary {
     border: 2px solid var(--charcoal);
+    background: rgb(253 251 247 / 0.8);
+    backdrop-filter: blur(10px);
     color: var(--charcoal);
-    padding: 13px 40px;
+    padding: clamp(10px, 2vw, 13px) clamp(30px, 5vw, 40px);
     border-radius: 50px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 2px;
-    transition: all 0.3s;
+    font-size: clamp(12px, 1.8vw, 14px);
+    letter-spacing: clamp(1px, 0.3vw, 2px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-block;
     text-transform: uppercase;
 }
@@ -170,11 +185,30 @@
     background: var(--charcoal);
     color: white;
     transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgb(44 41 38 / 0.3);
+}
+
+/* Optimizaciones para Performance */
+@media (prefers-reduced-motion: reduce) {
+    .hero-content,
+    .hero-badge {
+        animation: none;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        transition: none;
+    }
+}
+
+/* Móviles: Video más ligero y ajustes */
+@media (max-width: 768px) {
+    
 }
 
 /* Countdown Section */
 .countdown-section {
-    padding: 80px 5%;
+    padding: clamp(60px, 10vw, 80px) 5%;
     background: var(--charcoal);
     color: white;
     text-align: center;
@@ -182,59 +216,64 @@
 
 .countdown-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
+    font-size: clamp(32px, 5vw, 42px);
     margin-bottom: 10px;
+    font-weight: 300;
 }
 
 .countdown-subtitle {
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     opacity: 0.8;
-    margin-bottom: 40px;
-    letter-spacing: 2px;
+    margin-bottom: clamp(30px, 5vw, 40px);
+    letter-spacing: clamp(1px, 0.3vw, 2px);
 }
 
 .countdown-timer {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    margin-bottom: 40px;
+    gap: clamp(20px, 5vw, 40px);
+    margin-bottom: clamp(30px, 5vw, 40px);
     flex-wrap: wrap;
 }
 
 .countdown-item {
     text-align: center;
+    min-width: clamp(60px, 15vw, 80px);
 }
 
 .countdown-number {
-    font-size: 48px;
+    font-size: clamp(36px, 8vw, 48px);
     font-weight: 300;
     color: var(--primary-gold);
     display: block;
+    font-family: 'Cormorant Garamond', serif;
 }
 
 .countdown-label {
-    font-size: 12px;
+    font-size: clamp(11px, 1.5vw, 12px);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: clamp(1px, 0.3vw, 2px);
     opacity: 0.7;
+    margin-top: 5px;
+    display: block;
 }
 
 /* Progress Bar */
 .progress-container {
-    margin: 40px auto;
-    max-width: 600px;
+    margin: clamp(30px, 5vw, 40px) auto 0;
+    max-width: min(95%, 600px);
 }
 
 .progress-label {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: clamp(13px, 2vw, 14px);
 }
 
 .progress-bar {
     height: 8px;
-    background: rgba(196, 165, 114, 0.2);
+    background: rgb(196 165 114 / 0.2);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -243,17 +282,17 @@
     height: 100%;
     background: linear-gradient(90deg, var(--primary-gold), var(--dark-gold));
     border-radius: 4px;
-    width: 22%;
-    -webkit-animation: progressGrow 2s ease;
-            animation: progressGrow 2s ease;
-}
-
-@-webkit-keyframes progressGrow {
-    from { width: 0; }
-    to { width: 22%; }
+    width: 14%;
+    animation: progressGrow 2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes progressGrow {
-    from { width: 0; }
-    to { width: 22%; }
+    from { 
+        width: 0;
+        opacity: 0;
+    }
+    to { 
+        width: 14%;
+        opacity: 1;
+    }
 }
