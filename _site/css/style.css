@@ -1419,7 +1419,7 @@ body {
 .whatsapp-float {
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    left: 30px;
     width: 50px;
     height: 50px;
     background: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
@@ -1505,7 +1505,7 @@ body {
 .scroll-to-top {
     position: fixed;
     bottom: 100px;
-    right: 30px;
+    left: 30px;
     width: 50px;
     height: 50px;
     background: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
