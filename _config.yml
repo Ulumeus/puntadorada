@@ -73,10 +73,10 @@ collections:
     output: true
   lotes:
     output: true
-    permalink: /es/:path/
+    permalink: /es/:slug/
   lots:
     output: true
-    permalink: /en/:path/
+    permalink: /en/:slug/
 
 # Configuración por defecto
 defaults:

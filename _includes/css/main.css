@@ -590,8 +590,15 @@ body {
 
 /* FAQ Section */
 .faq-container {
-    max-width: 900px;
+    display: flex;
+    gap: 1em 2em;
+    flex-wrap: wrap;
+    align-items: flex-start;
     margin: 60px auto 0;
+
+    & > *{
+        flex: 1 1 300px;
+    }
 }
 
 .faq-item {
@@ -635,6 +642,7 @@ body {
     transition: all 0.3s;
     color: #666;
     line-height: 1.8;
+    font-size: 16px;
 }
 
 .faq-item.active .faq-answer {
