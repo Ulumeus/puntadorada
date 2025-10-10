@@ -188,24 +188,6 @@
     box-shadow: 0 10px 30px rgb(44 41 38 / 0.3);
 }
 
-/* Optimizaciones para Performance */
-@media (prefers-reduced-motion: reduce) {
-    .hero-content,
-    .hero-badge {
-        animation: none;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        transition: none;
-    }
-}
-
-/* Móviles: Video más ligero y ajustes */
-@media (max-width: 768px) {
-    
-}
-
 /* Countdown Section */
 .countdown-section {
     padding: clamp(60px, 10vw, 80px) 5%;

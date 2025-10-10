@@ -53,13 +53,8 @@ body {
   margin: 0 auto;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-}
-
 .logo-svg {
-  height: 50px;
+  height: 72px;
   width: auto;
 }
 

@@ -53,13 +53,8 @@ body {
   margin: 0 auto;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-}
-
 .logo-svg {
-  height: 50px;
+  height: 72px;
   width: auto;
 }
 
@@ -964,24 +959,6 @@ body {
     color: white;
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgb(44 41 38 / 0.3);
-}
-
-/* Optimizaciones para Performance */
-@media (prefers-reduced-motion: reduce) {
-    .hero-content,
-    .hero-badge {
-        animation: none;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        transition: none;
-    }
-}
-
-/* Móviles: Video más ligero y ajustes */
-@media (max-width: 768px) {
-    
 }
 
 /* Countdown Section */

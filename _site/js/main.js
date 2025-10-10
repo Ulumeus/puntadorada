@@ -1,344 +1,672 @@
 /**
- * Punta Dorada - Main JavaScript
- * Manejo de navegación, countdown, animaciones y formularios
+ * Punta Dorada Barú - Main JavaScript
+ * Versión refactorizada con código moderno ES6+
+ * Optimizado para performance y mantenibilidad
  */
 
-(function() {
+const PuntaDorada = (() => {
     'use strict';
 
     /* ==========================================
-       NAVBAR SCROLL
+       CONFIGURACIÓN Y CONSTANTES
        ========================================== */
-    function initNavbar() {
-        const navbar = document.getElementById('navbar');
-        if (!navbar) return;
+    const CONFIG = {
+        scrollThreshold: 50,
+        countdownDays: 45,
+        animationThreshold: 0.1,
+        animationRootMargin: '0px 0px -100px 0px',
+        videoThreshold: 0.25,
+    };
 
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    }
+    const SELECTORS = {
+        navbar: '#navbar',
+        menuToggle: '#menuToggle',
+        mobileMenu: '#mobileMenu',
+        video: '.hero-video',
+        faqQuestion: '.faq-question',
+        faqItem: '.faq-item',
+        form: '#waitlistForm',
+        fadeIn: '.fade-in',
+        lazyImage: 'img[data-src]',
+        scrollToTop: '#scrollToTop',
+        whatsappFloat: '.whatsapp-float',
+        countdown: {
+            days: '#days',
+            hours: '#hours',
+            minutes: '#minutes',
+            seconds: '#seconds',
+        },
+    };
 
     /* ==========================================
-       MOBILE MENU
+       UTILIDADES
        ========================================== */
-    function initMobileMenu() {
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+    const Utils = {
+        /**
+         * Selector seguro que retorna null si no encuentra elemento
+         */
+        $: (selector) => document.querySelector(selector),
         
-        if (!menuToggle || !mobileMenu) return;
+        /**
+         * Selector múltiple
+         */
+        $$: (selector) => document.querySelectorAll(selector),
 
-        menuToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
+        /**
+         * Padding de números con ceros
+         */
+        padZero: (num) => String(num).padStart(2, '0'),
 
-        // Cerrar menú al hacer clic en un enlace
-        const menuLinks = mobileMenu.querySelectorAll('a');
-        menuLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-            });
-        });
+        /**
+         * Debounce para optimizar eventos frecuentes
+         */
+        debounce: (func, wait = 100) => {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        },
 
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', function(event) {
-            const isClickInsideMenu = mobileMenu.contains(event.target);
-            const isClickOnToggle = menuToggle.contains(event.target);
+        /**
+         * Throttle para limitar ejecuciones
+         */
+        throttle: (func, limit = 100) => {
+            let inThrottle;
+            return (...args) => {
+                if (!inThrottle) {
+                    func.apply(this, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        },
+
+        /**
+         * Verifica soporte de features
+         */
+        supports: (feature) => feature in window,
+    };
+
+    /* ==========================================
+       NAVBAR MODULE
+       ========================================== */
+    const Navbar = {
+        element: null,
+
+        init() {
+            this.element = Utils.$(SELECTORS.navbar);
+            if (!this.element) return;
+
+            this.handleScroll();
+            window.addEventListener('scroll', Utils.throttle(() => this.handleScroll(), 100));
+        },
+
+        handleScroll() {
+            const shouldAddClass = window.scrollY > CONFIG.scrollThreshold;
+            this.element.classList.toggle('scrolled', shouldAddClass);
+        },
+    };
+
+    /* ==========================================
+       MOBILE MENU MODULE
+       ========================================== */
+    const MobileMenu = {
+        toggle: null,
+        menu: null,
+
+        init() {
+            this.toggle = Utils.$(SELECTORS.menuToggle);
+            this.menu = Utils.$(SELECTORS.mobileMenu);
             
-            if (!isClickInsideMenu && !isClickOnToggle && mobileMenu.classList.contains('active')) {
-                mobileMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
+            if (!this.toggle || !this.menu) return;
+
+            this.bindEvents();
+        },
+
+        bindEvents() {
+            // Toggle menu
+            this.toggle.addEventListener('click', () => this.toggleMenu());
+
+            // Cerrar al hacer clic en enlaces
+            this.menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => this.closeMenu());
+            });
+
+            // Cerrar al hacer clic fuera
+            document.addEventListener('click', (e) => this.handleOutsideClick(e));
+        },
+
+        toggleMenu() {
+            const isActive = this.menu.classList.toggle('active');
+            this.toggle.classList.toggle('active', isActive);
+        },
+
+        closeMenu() {
+            this.menu.classList.remove('active');
+            this.toggle.classList.remove('active');
+        },
+
+        handleOutsideClick(event) {
+            const clickedInside = this.menu.contains(event.target) || 
+                                 this.toggle.contains(event.target);
+            
+            if (!clickedInside && this.menu.classList.contains('active')) {
+                this.closeMenu();
             }
-        });
-    }
+        },
+    };
 
     /* ==========================================
-       COUNTDOWN TIMER
+       COUNTDOWN MODULE
        ========================================== */
-    function initCountdown() {
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
+    const Countdown = {
+        elements: {},
+        targetDate: null,
+        intervalId: null,
 
-        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+        init() {
+            // Verificar elementos
+            this.elements = {
+                days: Utils.$(SELECTORS.countdown.days),
+                hours: Utils.$(SELECTORS.countdown.hours),
+                minutes: Utils.$(SELECTORS.countdown.minutes),
+                seconds: Utils.$(SELECTORS.countdown.seconds),
+            };
 
-        // Fecha objetivo: 45 días desde hoy
-        const targetDate = new Date();
-        targetDate.setDate(targetDate.getDate() + 45);
+            if (!Object.values(this.elements).every(Boolean)) return;
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+            // Establecer fecha objetivo
+            this.targetDate = new Date();
+            this.targetDate.setDate(this.targetDate.getDate() + CONFIG.countdownDays);
 
-            // Calcular tiempo restante
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Iniciar countdown
+            this.update();
+            this.intervalId = setInterval(() => this.update(), 1000);
+        },
 
-            // Actualizar DOM
-            daysEl.textContent = days;
-            hoursEl.textContent = hours;
-            minutesEl.textContent = minutes;
-            secondsEl.textContent = seconds;
+        update() {
+            const now = Date.now();
+            const distance = this.targetDate - now;
 
-            // Si el countdown termina
             if (distance < 0) {
-                clearInterval(countdownInterval);
-                daysEl.textContent = '0';
-                hoursEl.textContent = '0';
-                minutesEl.textContent = '0';
-                secondsEl.textContent = '0';
+                this.handleExpiration();
+                return;
             }
-        }
 
-        // Actualizar cada segundo
-        updateCountdown();
-        const countdownInterval = setInterval(updateCountdown, 1000);
-    }
+            const time = this.calculateTime(distance);
+            this.render(time);
+        },
 
-    /* ==========================================
-       FAQ ACCORDION
-       ========================================== */
-    function initFAQ() {
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        
-        faqQuestions.forEach(function(question) {
-            question.addEventListener('click', function() {
-                const item = this.parentElement;
-                const wasActive = item.classList.contains('active');
+        calculateTime(distance) {
+            return {
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds: Math.floor((distance % (1000 * 60)) / 1000),
+            };
+        },
 
-                // Cerrar todos los items
-                document.querySelectorAll('.faq-item').forEach(function(faqItem) {
-                    faqItem.classList.remove('active');
-                });
-
-                // Abrir el item clickeado si no estaba activo
-                if (!wasActive) {
-                    item.classList.add('active');
+        render(time) {
+            Object.entries(time).forEach(([unit, value]) => {
+                if (this.elements[unit]) {
+                    this.elements[unit].textContent = value;
                 }
             });
-        });
-    }
+        },
+
+        handleExpiration() {
+            clearInterval(this.intervalId);
+            Object.values(this.elements).forEach(el => el.textContent = '0');
+        },
+
+        destroy() {
+            if (this.intervalId) {
+                clearInterval(this.intervalId);
+            }
+        },
+    };
 
     /* ==========================================
-       FORM SUBMISSION
+       VIDEO HERO MODULE
        ========================================== */
-    function initForm() {
-        const form = document.getElementById('waitlistForm');
-        if (!form) return;
+    const VideoHero = {
+        video: null,
+        observer: null,
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+        init() {
+            this.video = Utils.$(SELECTORS.video);
+            if (!this.video) return;
 
-            // Obtener datos del formulario
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach(function(value, key) {
-                data[key] = value;
+            this.setupVideo();
+            this.setupIntersectionObserver();
+            this.handleErrors();
+        },
+
+        setupVideo() {
+            // Intentar reproducir cuando cargue
+            this.video.addEventListener('loadeddata', () => {
+                this.play();
+            }, { once: true });
+
+            // Asegurar que esté muteado para autoplay
+            this.video.muted = true;
+        },
+
+        play() {
+            this.video.play().catch(error => {
+                console.warn('Autoplay bloqueado por el navegador:', error);
+                // El poster se mostrará automáticamente
             });
+        },
 
-            // Aquí puedes agregar lógica para enviar a tu backend
-            console.log('Form data:', data);
+        setupIntersectionObserver() {
+            if (!Utils.supports('IntersectionObserver')) return;
 
-            // Mensaje de confirmación
+            this.observer = new IntersectionObserver(
+                (entries) => this.handleIntersection(entries),
+                { threshold: CONFIG.videoThreshold }
+            );
+
+            this.observer.observe(this.video);
+        },
+
+        handleIntersection(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.play();
+                } else {
+                    this.video.pause();
+                }
+            });
+        },
+
+        handleErrors() {
+            this.video.addEventListener('error', () => {
+                console.error('Error al cargar video. Mostrando fallback.');
+                this.video.style.display = 'none';
+            });
+        },
+
+        destroy() {
+            this.observer?.disconnect();
+        },
+    };
+
+    /* ==========================================
+       FAQ ACCORDION MODULE
+       ========================================== */
+    const FAQ = {
+        init() {
+            const questions = Utils.$$(SELECTORS.faqQuestion);
+            if (!questions.length) return;
+
+            // Event delegation para mejor performance
+            document.addEventListener('click', (e) => {
+                const question = e.target.closest(SELECTORS.faqQuestion);
+                if (question) this.toggle(question);
+            });
+        },
+
+        toggle(questionElement) {
+            const item = questionElement.closest(SELECTORS.faqItem);
+            if (!item) return;
+
+            const wasActive = item.classList.contains('active');
+
+            // Cerrar todos
+            this.closeAll();
+
+            // Abrir el clickeado si no estaba activo
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        },
+
+        closeAll() {
+            Utils.$$(SELECTORS.faqItem).forEach(item => {
+                item.classList.remove('active');
+            });
+        },
+    };
+
+    /* ==========================================
+       FORM MODULE
+       ========================================== */
+    const Form = {
+        form: null,
+
+        init() {
+            this.form = Utils.$(SELECTORS.form);
+            if (!this.form) return;
+
+            this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        },
+
+        handleSubmit(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this.form);
+            const data = Object.fromEntries(formData.entries());
+
+            // Validación básica
+            if (!this.validate(data)) return;
+
+            // Aquí integrar con tu backend
+            this.sendData(data);
+        },
+
+        validate(data) {
+            // Agregar validaciones necesarias
+            const requiredFields = ['name', 'email', 'phone'];
+            
+            for (const field of requiredFields) {
+                if (!data[field]?.trim()) {
+                    this.showError(`Por favor completa el campo ${field}`);
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        async sendData(data) {
+            try {
+                // Ejemplo de integración con API
+                // const response = await fetch('/api/waitlist', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(data)
+                // });
+
+                console.log('Datos del formulario:', data);
+                this.showSuccess();
+                this.form.reset();
+
+            } catch (error) {
+                console.error('Error al enviar formulario:', error);
+                this.showError('Hubo un error. Por favor intenta nuevamente.');
+            }
+        },
+
+        showSuccess() {
             const lang = document.documentElement.lang || 'es';
             const message = lang === 'es' 
                 ? '¡Gracias por tu interés! Te contactaremos pronto con información detallada sobre los lotes disponibles.'
                 : 'Thank you for your interest! We will contact you soon with detailed information about available lots.';
             
-            alert(message);
+            alert(message); // Reemplazar con modal personalizado
+        },
 
-            // Reset form
-            form.reset();
-
-            // Opcional: Redirigir a WhatsApp
-            // const whatsappNumber = '573001234567';
-            // const whatsappMessage = encodeURIComponent('Hola! Me gustaría recibir más información sobre los lotes en Punta Dorada.');
-            // window.open('https://wa.me/' + whatsappNumber + '?text=' + whatsappMessage, '_blank');
-        });
-    }
+        showError(message) {
+            alert(message); // Reemplazar con notificación personalizada
+        },
+    };
 
     /* ==========================================
-       SMOOTH SCROLL
+       SMOOTH SCROLL MODULE
        ========================================== */
-    function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                
-                // Ignorar si es solo "#"
-                if (href === '#') {
-                    e.preventDefault();
-                    return;
-                }
-
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-
-                    // Cerrar mobile menu si está abierto
-                    const mobileMenu = document.getElementById('mobileMenu');
-                    const menuToggle = document.getElementById('menuToggle');
-                    if (mobileMenu && mobileMenu.classList.contains('active')) {
-                        mobileMenu.classList.remove('active');
-                        if (menuToggle) menuToggle.classList.remove('active');
-                    }
-                }
+    const SmoothScroll = {
+        init() {
+            // Event delegation
+            document.addEventListener('click', (e) => {
+                const anchor = e.target.closest('a[href^="#"]');
+                if (anchor) this.handleClick(e, anchor);
             });
-        });
-    }
+        },
+
+        handleClick(event, anchor) {
+            const href = anchor.getAttribute('href');
+            
+            if (href === '#') {
+                event.preventDefault();
+                return;
+            }
+
+            const target = Utils.$(href);
+            if (!target) return;
+
+            event.preventDefault();
+            
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
+
+            // Cerrar mobile menu si está abierto
+            MobileMenu.closeMenu();
+        },
+    };
 
     /* ==========================================
-       FADE IN ANIMATION (Intersection Observer)
+       FADE IN ANIMATION MODULE
        ========================================== */
-    function initFadeInAnimation() {
-        // Verificar si el navegador soporta Intersection Observer
-        if (!('IntersectionObserver' in window)) {
-            // Fallback: mostrar todos los elementos inmediatamente
-            document.querySelectorAll('.fade-in').forEach(function(element) {
-                element.classList.add('visible');
-            });
-            return;
-        }
+    const FadeInAnimation = {
+        observer: null,
 
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+        init() {
+            const elements = Utils.$$(SELECTORS.fadeIn);
+            if (!elements.length) return;
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
+            if (!Utils.supports('IntersectionObserver')) {
+                this.fallback(elements);
+                return;
+            }
+
+            this.setupObserver();
+            elements.forEach(el => this.observer.observe(el));
+        },
+
+        setupObserver() {
+            const options = {
+                threshold: CONFIG.animationThreshold,
+                rootMargin: CONFIG.animationRootMargin,
+            };
+
+            this.observer = new IntersectionObserver(
+                (entries) => this.handleIntersection(entries),
+                options
+            );
+        },
+
+        handleIntersection(entries) {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // Opcional: dejar de observar después de animar
-                    // observer.unobserve(entry.target);
+                    // Opcional: dejar de observar
+                    // this.observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        },
 
-        document.querySelectorAll('.fade-in').forEach(function(element) {
-            observer.observe(element);
-        });
-    }
+        fallback(elements) {
+            elements.forEach(el => el.classList.add('visible'));
+        },
+
+        destroy() {
+            this.observer?.disconnect();
+        },
+    };
 
     /* ==========================================
-       LAZY LOAD IMAGES
+       LAZY LOAD IMAGES MODULE
        ========================================== */
-    function initLazyLoad() {
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
+    const LazyLoad = {
+        observer: null,
+
+        init() {
+            const images = Utils.$$(SELECTORS.lazyImage);
+            if (!images.length) return;
+
+            if (!Utils.supports('IntersectionObserver')) {
+                this.fallback(images);
+                return;
+            }
+
+            this.setupObserver();
+            images.forEach(img => this.observer.observe(img));
+        },
+
+        setupObserver() {
+            this.observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                            img.removeAttribute('data-src');
-                            img.classList.add('loaded');
-                        }
-                        imageObserver.unobserve(img);
+                        this.loadImage(entry.target);
+                        this.observer.unobserve(entry.target);
                     }
                 });
             });
+        },
 
-            document.querySelectorAll('img[data-src]').forEach(function(img) {
-                imageObserver.observe(img);
-            });
-        } else {
-            // Fallback para navegadores sin IntersectionObserver
-            document.querySelectorAll('img[data-src]').forEach(function(img) {
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                }
-            });
-        }
-    }
+        loadImage(img) {
+            const src = img.dataset.src;
+            if (!src) return;
+
+            img.src = src;
+            img.removeAttribute('data-src');
+            img.classList.add('loaded');
+
+            // Manejar errores de carga
+            img.addEventListener('error', () => {
+                console.error(`Error al cargar imagen: ${src}`);
+            }, { once: true });
+        },
+
+        fallback(images) {
+            images.forEach(img => this.loadImage(img));
+        },
+
+        destroy() {
+            this.observer?.disconnect();
+        },
+    };
 
     /* ==========================================
-       SCROLL TO TOP BUTTON
+       SCROLL TO TOP MODULE
        ========================================== */
-    function initScrollToTop() {
-        const scrollBtn = document.getElementById('scrollToTop');
-        if (!scrollBtn) return;
+    const ScrollToTop = {
+        button: null,
 
-        // Mostrar/ocultar botón según scroll
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                scrollBtn.classList.add('visible');
-            } else {
-                scrollBtn.classList.remove('visible');
-            }
-        });
+        init() {
+            this.button = Utils.$(SELECTORS.scrollToTop);
+            if (!this.button) return;
 
-        // Scroll suave al hacer clic
-        scrollBtn.addEventListener('click', function() {
+            this.handleScroll();
+            window.addEventListener('scroll', Utils.throttle(() => this.handleScroll(), 200));
+            this.button.addEventListener('click', () => this.scrollToTop());
+        },
+
+        handleScroll() {
+            const shouldShow = window.scrollY > 300;
+            this.button.classList.toggle('visible', shouldShow);
+        },
+
+        scrollToTop() {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth'
+                behavior: 'smooth',
             });
-        });
-    }
+        },
+    };
 
     /* ==========================================
-       WHATSAPP BUTTON
+       WHATSAPP FLOAT MODULE
        ========================================== */
-    function initWhatsApp() {
-        const whatsappBtn = document.querySelector('.whatsapp-float');
-        if (!whatsappBtn) return;
+    const WhatsAppFloat = {
+        button: null,
 
-        // Mostrar después de scroll
-        window.addEventListener('scroll', function() {
+        init() {
+            this.button = Utils.$(SELECTORS.whatsappFloat);
+            if (!this.button) return;
+
+            // Mostrar después de scroll inicial
+            window.addEventListener('scroll', () => this.handleScroll(), { once: true });
+        },
+
+        handleScroll() {
             if (window.scrollY > 200) {
-                whatsappBtn.classList.add('visible');
+                this.button?.classList.add('visible');
+            }
+        },
+    };
+
+    /* ==========================================
+       INICIALIZACIÓN PRINCIPAL
+       ========================================== */
+    const init = () => {
+        // Ejecutar cuando DOM esté listo
+        const modules = [
+            Navbar,
+            MobileMenu,
+            Countdown,
+            VideoHero,
+            FAQ,
+            Form,
+            SmoothScroll,
+            FadeInAnimation,
+            LazyLoad,
+            ScrollToTop,
+            WhatsAppFloat,
+        ];
+
+        modules.forEach(module => {
+            try {
+                module.init();
+            } catch (error) {
+                console.error(`Error al inicializar módulo:`, error);
             }
         });
-    }
+
+        // Log para debugging (remover en producción)
+        if (process.env.NODE_ENV === 'development') {
+            console.log('✅ Punta Dorada inicializado correctamente');
+        }
+    };
 
     /* ==========================================
-       INICIALIZACIÓN
+       CLEANUP AL SALIR (Opcional para SPAs)
        ========================================== */
-    function init() {
-        // Esperar a que el DOM esté listo
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
-                initNavbar();
-                initMobileMenu();
-                initCountdown();
-                initFAQ();
-                initForm();
-                initSmoothScroll();
-                initFadeInAnimation();
-                initLazyLoad();
-                initScrollToTop();
-                initWhatsApp();
-            });
-        } else {
-            // DOM ya está listo
-            initNavbar();
-            initMobileMenu();
-            initCountdown();
-            initFAQ();
-            initForm();
-            initSmoothScroll();
-            initFadeInAnimation();
-            initLazyLoad();
-            initScrollToTop();
-            initWhatsApp();
-        }
-    }
+    const destroy = () => {
+        Countdown.destroy();
+        VideoHero.destroy();
+        FadeInAnimation.destroy();
+        LazyLoad.destroy();
+    };
 
-    // Iniciar aplicación
-    init();
-
+    /* ==========================================
+       API PÚBLICA
+       ========================================== */
+    return {
+        init,
+        destroy,
+        modules: {
+            Navbar,
+            MobileMenu,
+            Countdown,
+            VideoHero,
+            FAQ,
+            Form,
+            SmoothScroll,
+            FadeInAnimation,
+            LazyLoad,
+            ScrollToTop,
+            WhatsAppFloat,
+        },
+    };
 })();
+
+/* ==========================================
+   AUTO-INICIALIZACIÓN
+   ========================================== */
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', PuntaDorada.init);
+} else {
+    PuntaDorada.init();
+}
+
+/* ==========================================
+   EXPORTAR PARA POSIBLE USO EN OTROS SCRIPTS
+   ========================================== */
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = PuntaDorada;
+}
