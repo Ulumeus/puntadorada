@@ -14,7 +14,11 @@
 
 <!-- Meta descripción optimizada -->
 <meta name="description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines }}{% else %}{% if current_lang == 'es' %}{{ site.site_meta.description.es }}{% else %}{{ site.site_meta.description.en }}{% endif %}{% endif %}">
+<meta name="keywords" content="{% if current_lang == 'es' %}lotes barú, cartagena, punta dorada, lotes exclusivos, propiedad caribe, cabañas wellness, título propiedad individual, desarrollo inmobiliario{% else %}barú lots, cartagena, punta dorada, exclusive lots, caribbean property, wellness cabins, individual property title, real estate development{% endif %}">
 <meta name="robots" content="{% if page.noindex %}noindex, nofollow{% elsif page.sitemap == false %}noindex, follow{% else %}index, follow{% endif %}">
+<meta name="distribution" content="global">
+<meta name="rating" content="general">
+<meta name="revisit-after" content="7 days">
 
 <!-- Meta tags de seguridad -->
 <meta name="referrer" content="strict-origin-when-cross-origin">
