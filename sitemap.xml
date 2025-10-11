@@ -1,0 +1,48 @@
+---
+layout: none
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  {% for page in site.pages %}
+    {% unless page.sitemap == false %}
+      <url>
+        <loc>{{ site.url }}{{ page.url }}</loc>
+        <lastmod>{{ page.last_modified_at | date_to_xmlschema | default: site.time | date_to_xmlschema }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>{% if page.url == '/' or page.url == '/es/' or page.url == '/en/' %}1.0{% else %}0.8{% endif %}</priority>
+      </url>
+    {% endunless %}
+  {% endfor %}
+
+  {% for post in site.posts %}
+    <url>
+      <loc>{{ site.url }}{{ post.url }}</loc>
+      <lastmod>{{ post.last_modified_at | date_to_xmlschema | default: post.date | date_to_xmlschema }}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+    </url>
+  {% endfor %}
+
+  {% for lote in site.lotes %}
+    <url>
+      <loc>{{ site.url }}{{ lote.url }}</loc>
+      <lastmod>{{ lote.last_modified_at | date_to_xmlschema | default: lote.date | date_to_xmlschema }}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+    </url>
+  {% endfor %}
+
+  {% for lot in site.lots %}
+    <url>
+      <loc>{{ site.url }}{{ lot.url }}</loc>
+      <lastmod>{{ lot.last_modified_at | date_to_xmlschema | default: lot.date | date_to_xmlschema }}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+    </url>
+  {% endfor %}
+
+</urlset>
