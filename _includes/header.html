@@ -3,40 +3,6 @@
 
 <!-- Hero Section -->
 <section class="hero" id="hero">
-  <div class="hero-video-container">
-    <video
-      class="hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-      poster="{{'/img/hero-poster.jpg'|relative_url}}"
-      aria-label="{% if current_lang == 'en' %}Video background of Barú beach{% else %}Video de fondo de playa en Barú{% endif %}"
-    >
-      <!-- WebM para Chrome/Firefox (mejor compresión) -->
-      <source
-        src="{{'/videos/punta-dorada-baru.webm'|relative_url}}"
-        type="video/webm"
-      />
-      <!-- MP4 para Safari/fallback -->
-      <source
-        src="{{'/videos/punta-dorada-baru.mp4'|relative_url}}"
-        type="video/mp4"
-      />
-
-      <!-- Fallback para navegadores sin soporte -->
-      <img
-        src="{{'/img/hero-poster.jpg'|relative_url}}"
-        alt="{% if current_lang == 'en' %}Barú Beach{% else %}Playa Barú{% endif %}"
-        class="hero-fallback-img"
-      />
-    </video>
-
-    <!-- Overlay con gradiente -->
-    <div class="hero-overlay" aria-hidden="true"></div>
-  </div>
-
   <div class="hero-content">
     <div class="hero-badge">
       {% if current_lang == 'en' %} 59 LOTS LAUNCHING • FIRST PHASE {% else %}
