@@ -1,0 +1,27 @@
+{% assign current_lang = page.lang | default: site.default_lang | default: "es" %}
+
+<!-- Lifestyle Gallery Section -->
+<section class="lifestyle-gallery fade-in" id="lifestyle">
+  <div class="container">
+    <div class="section-content">
+      <div class="section-label">{{ page.lifestyle.section_label }}</div>
+      <h2 class="section-title">{{ page.lifestyle.section_title }}</h2>
+    </div>
+
+    <div class="gallery-grid">
+      {% for item in page.lifestyle.gallery %}
+      <div class="gallery-image-card {{ item.size }}">
+        <div class="gallery-background" 
+             style="background-image: url({{ item.image | relative_url }}), {{ item.gradient }};">
+        </div>
+        <div class="gallery-overlay">
+          <svg width="{{ item.svg_size }}" height="{{ item.svg_size }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {{ item.svg }}
+          </svg>
+          <div class="gallery-title {{ item.title_class }}">{{ item.title }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
