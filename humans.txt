@@ -1,0 +1,18 @@
+/* TEAM */
+Developer: Punta Dorada Development Team
+Contact: contacto@puntadoradabaru.com
+Location: Cartagena, Colombia
+
+/* SITE */
+Last update: 2025/10/15
+Language: Spanish, English
+Doctype: HTML5
+IDE: Visual Studio Code
+
+/* THANKS */
+Thanks to: Jekyll, GitHub Pages, and the open source community
+
+/* SITE */
+Standards: HTML5, CSS3, JavaScript
+Components: Jekyll static site generator
+Software: Jekyll 4.x, Ruby 3.x

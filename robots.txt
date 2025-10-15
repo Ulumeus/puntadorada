@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Disallow access to admin areas (if any)
+Disallow: /admin/
+Disallow: /_site/
+Disallow: /.jekyll-cache/
+Disallow: /node_modules/
+
+# Allow access to sitemap
+Allow: /sitemap.xml
+
+# Crawl delay (optional, adjust as needed)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://puntadoradabaru.com/sitemap.xml

@@ -1,0 +1,5 @@
+Contact: mailto:contacto@puntadoradabaru.com
+Contact: tel:+573001234567
+Expires: 2026-10-15T15:44:05.206Z
+Preferred-Languages: es, en
+Canonical: https://puntadoradabaru.com/.well-known/security.txt
