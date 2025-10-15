@@ -226,7 +226,6 @@
 }
 
 .countdown-title {
-    font-family: 'Cormorant Garamond', serif;
     font-size: clamp(32px, 5vw, 42px);
     margin-bottom: 10px;
     font-weight: 300;
