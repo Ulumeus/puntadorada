@@ -1056,52 +1056,40 @@ Those who join in this phase secure a more favorable entry point, with projected
     </div>
   </div>
 </section>
-
-<!-- Contact Form -->
-<section class="form-section" id="reservar">
+<section class="form-section" id="reserve">
   <div class="container">
     <h2 class="section-title" style="color: white;">Reserve Your Lot Now</h2>
     <p class="section-description" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto;">
       Only 51 lots available. Complete the form to receive detailed information.
     </p>
-
-    <form class="waitlist-form" id="waitlistForm" 
-          name="reservas-lotes" 
-          method="POST" 
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          action="/gracias">
-      
-      <!-- Campo anti-spam oculto -->
-      <input type="hidden" name="bot-field">
-      <input type="hidden" name="form-name" value="reservas-lotes">
+    <form class="waitlist-form" id="waitlistForm">
       <div class="form-group">
-        <input type="text" class="form-input" name="nombre" placeholder="Name" required>
-        <input type="text" class="form-input" name="apellido" placeholder="Last Name" required>
+        <input type="text" class="form-input" name="firstName" placeholder="First Name" required>
+        <input type="text" class="form-input" name="lastName" placeholder="Last Name" required>
       </div>
       <div class="form-group">
         <input type="email" class="form-input" name="email" placeholder="Email" required>
-        <input type="tel" class="form-input" name="telefono" placeholder="Phone" required>
+        <input type="tel" class="form-input" name="phone" placeholder="Phone" required>
       </div>
       <div class="form-group">
-        <select class="form-select form-input" name="lote" required>
-          <option value="">Lot of Interest</option>
-          <option value="150c">150 m² Lot Center - $250M (28 avail.)</option>
-          <option value="150e">150 m² Lot Corner - $260M (10 avail.)</option>
-          <option value="160c">160 m² Lot Center - $270M (4 avail.)</option>
-          <option value="160e">160 m² Lot Corner - $285M (2 avail.)</option>
-          <option value="200c">200 m² Lot Center - $300M (13 avail.)</option>
-          <option value="200e">200 m² Lot Corner - $315M (2 avail.)</option>
+        <select class="form-select form-input" name="lot" required>
+          <option value="">Lot of interest</option>
+          <option value="150 sqm Lot Center - $250M (28 avail.)">150 sqm Lot Center - $250M (28 avail.)</option>
+          <option value="150 sqm Lot Corner - $260M (10 avail.)">150 sqm Lot Corner - $260M (10 avail.)</option>
+          <option value="160 sqm Lot Center - $270M (4 avail.)">160 sqm Lot Center - $270M (4 avail.)</option>
+          <option value="160 sqm Lot Corner - $285M (2 avail.)">160 sqm Lot Corner - $285M (2 avail.)</option>
+          <option value="200 sqm Lot Center - $300M (13 avail.)">200 sqm Lot Center - $300M (13 avail.)</option>
+          <option value="200 sqm Lot Corner - $315M (2 avail.)">200 sqm Lot Corner - $315M (2 avail.)</option>
         </select>
-        <select class="form-select form-input" name="plan">
-          <option value="">Preferred Payment Plan</option>
-          <option value="contado">Cash Payment (special discount)</option>
-          <option value="30-50-20">30% down + 50% (24 months) + 20% delivery</option>
-          <option value="personalizado">Customized Plan</option>
+        <select class="form-select form-input" name="paymentPlan">
+          <option value="">Preferred payment plan</option>
+          <option value="Cash payment (special discount)">Cash payment (special discount)</option>
+          <option value="30% down + 50% (24 months) + 20% delivery">30% down + 50% (24 months) + 20% delivery</option>
+          <option value="Custom plan">Custom plan</option>
         </select>
       </div>
       <div class="form-group">
-        <textarea class="form-input full-width" name="mensaje" placeholder="Message (optional)" rows="4"></textarea>
+        <textarea class="form-input full-width" name="message" placeholder="Message (optional)" rows="4"></textarea>
       </div>
       <div class="form-group">
         <button type="submit" class="form-submit">Reserve Lot</button>
@@ -1109,6 +1097,90 @@ Those who join in this phase secure a more favorable entry point, with projected
     </form>
   </div>
 </section>
+
+<!-- IMPORTANT: Replace with your form ID -->
+<!-- Find it in the URL: forms.google.com/d/e/[THIS_ID]/viewform -->
+<script>
+const GOOGLE_FORM_CONFIG = {
+  formId: '1FAIpQLSf7sRrQbXMaDcMS2_octU-WJn7kjJkMAtMka-EaPEVrFk-nyA',
+  
+  fields: {
+    firstName: 'entry.190572529',    
+    lastName: 'entry.839140675',     
+    email: 'entry.1915628032',       
+    phone: 'entry.1837414571',       
+    lot: 'entry.1429268860',         
+    paymentPlan: 'entry.1486776839', 
+    message: 'entry.331519757'       
+  }
+};
+
+document.getElementById('waitlistForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = e.target.querySelector('.form-submit');
+  const originalText = submitBtn.textContent;
+  
+  submitBtn.textContent = 'Sending...';
+  submitBtn.disabled = true;
+  submitBtn.style.cursor = 'not-allowed';
+  submitBtn.style.opacity = '0.7';
+
+  const formData = new FormData(e.target);
+  const googleFormData = new URLSearchParams();
+
+  Object.entries(GOOGLE_FORM_CONFIG.fields).forEach(([htmlField, entryId]) => {
+    const value = formData.get(htmlField);
+    if (value) {
+      googleFormData.append(entryId, value);
+    }
+  });
+
+  try {
+    await fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/formResponse`, {
+      method: 'POST',
+      body: googleFormData,
+      mode: 'no-cors' 
+    });
+
+    submitBtn.textContent = '✓ Reservation Sent';
+    submitBtn.style.background = '#10b981';
+    submitBtn.style.opacity = '1';
+    
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'generate_lead', {
+        event_category: 'Form',
+        event_label: formData.get('lot'),
+        value: 250000000
+      });
+    }
+
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', {
+        content_name: formData.get('lot'),
+        content_category: 'Lot Reservation'
+      });
+    }
+    
+    setTimeout(() => {
+      window.location.href = '/thanks.html?lot=' + encodeURIComponent(formData.get('lot'));
+    }, 1500);
+
+  } catch (error) {
+    console.error('Error sending:', error);
+    submitBtn.textContent = '✗ Error - Try again';
+    submitBtn.style.background = '#ef4444';
+    submitBtn.disabled = false;
+    submitBtn.style.cursor = 'pointer';
+
+    setTimeout(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.style.background = '';
+      submitBtn.style.opacity = '1';
+    }, 3000);
+  }
+});
+</script>
   </main>
 
   

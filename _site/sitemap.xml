@@ -8,7 +8,7 @@
     
       <url>
         <loc>http://localhost:4000/en/feed.xml</loc>
-        <lastmod>2025-10-16T12:18:19-05:00</lastmod>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
       </url>
@@ -17,7 +17,16 @@
     
       <url>
         <loc>http://localhost:4000/es/feed.xml</loc>
-        <lastmod>2025-10-16T12:18:19-05:00</lastmod>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+    
+  
+    
+      <url>
+        <loc>http://localhost:4000/es/gracias/</loc>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
       </url>
@@ -26,7 +35,7 @@
     
       <url>
         <loc>http://localhost:4000/en/</loc>
-        <lastmod>2025-10-16T12:18:19-05:00</lastmod>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
       </url>
@@ -35,7 +44,7 @@
     
       <url>
         <loc>http://localhost:4000/es/</loc>
-        <lastmod>2025-10-16T12:18:19-05:00</lastmod>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
       </url>
@@ -46,7 +55,16 @@
     
       <url>
         <loc>http://localhost:4000/css/style.css</loc>
-        <lastmod>2025-10-16T12:18:19-05:00</lastmod>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+    
+  
+    
+      <url>
+        <loc>http://localhost:4000/en/thanks/</loc>
+        <lastmod>2025-10-16T12:52:19-05:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
       </url>

@@ -1,0 +1,41 @@
+---
+layout: compress
+---
+{% assign current_lang = page.lang | default: site.default_lang | default: "es"%}
+{% if current_lang == "es" %}
+{% assign alt_lang = "en" %}
+{% else %}
+{% assign alt_lang = "es" %}
+{% endif %}
+{% capture home_url %}/{{ current_lang }}/{% endcapture %}
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+
+<head>
+  {% include head.html %}
+</head>
+
+<body data-layout="{{ page.layout | default: 'default' }}" data-lang="{{ current_lang }}" {% if page.layout=='post'
+  %}class="post-page" {% endif %} {% if page.layout=='lote' or page.layout=='lot' %}class="lote-page" {% endif %}>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXXX" height="0" width="0"
+      style="display: none; visibility: hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  {% include nav.html %}
+  <!-- Hero Section -->
+  <main id="main-content" role="main">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+  {% include whatsapp.html type="float" %}
+  {% include scroll-to-top.html %}
+
+  <!-- JavaScript unificado -->
+  <script defer src="{{ '/js/main.js' | relative_url }}"></script>
+
+</body>
+
+</html>
