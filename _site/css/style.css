@@ -1339,6 +1339,139 @@ body {
     }
 }
 
+.coming-soon-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--charcoal) 0%, #3a3734 100%);
+            color: white;
+            text-align: center;
+            padding: 0 5%;
+        }
+
+        .coming-soon-content {
+            max-width: 800px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .coming-soon-logo {
+            margin-bottom: 40px;
+        }
+
+        .coming-soon-logo svg {
+            width: 300px;
+            height: 80px;
+        }
+
+        .coming-soon-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(48px, 8vw, 72px);
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .coming-soon-subtitle {
+            font-size: clamp(18px, 3vw, 24px);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .coming-soon-description {
+            font-size: clamp(16px, 2vw, 18px);
+            line-height: 1.7;
+            margin-bottom: 50px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coming-soon-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 1024px) {
+            .coming-soon-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .coming-soon-feature {
+            text-align: center;
+        }
+
+        .coming-soon-feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coming-soon-feature-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        .coming-soon-feature-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--primary-gold);
+        }
+
+        .coming-soon-feature-text {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .coming-soon-cta {
+            margin-top: 50px;
+        }
+
+        .coming-soon-cta .btn-primary {
+            padding: 18px 50px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .coming-soon-features {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            .coming-soon-logo svg {
+                width: 250px;
+                height: 65px;
+            }
+        }
 /* Responsive */
 @media (max-width: 768px) {
     .nav-menu {

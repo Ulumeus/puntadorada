@@ -6,6 +6,7 @@ layout: compress
 {% include css/stwicher.css %}
 {% include css/header.css %}
 {% include css/pages.css %}
+{% include css/coming.css %}
 {% include css/queries.css %}
 {% include css/footer.css %}
 
