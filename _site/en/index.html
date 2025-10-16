@@ -1097,7 +1097,6 @@ Those who join in this phase secure a more favorable entry point, with projected
     </form>
   </div>
 </section>
-
 <script>
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyL9_uu2qA06kO7Lblj4f8MCeyKoRAYuPExWilHBfH1sAYqwEL2FTtMaazI3aj5nM7H/exec';
 
@@ -1105,9 +1104,11 @@ document.getElementById('waitlistForm')?.addEventListener('submit', async (e) =>
   e.preventDefault();
   
   const submitBtn = e.target.querySelector('.form-submit');
-  const originalText = submitBtn.textContent;
+  const textoOriginal = submitBtn.textContent;
   
-  submitBtn.textContent = 'Sending...';
+  console.log('🚀 Iniciando envío de formulario...');
+  
+  submitBtn.textContent = 'Enviando...';
   submitBtn.disabled = true;
   submitBtn.style.cursor = 'not-allowed';
   submitBtn.style.opacity = '0.7';
@@ -1115,69 +1116,82 @@ document.getElementById('waitlistForm')?.addEventListener('submit', async (e) =>
   const formData = new FormData(e.target);
   
   const data = {
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
+    nombre: formData.get('nombre'),
+    apellido: formData.get('apellido'),
     email: formData.get('email'),
-    phone: formData.get('phone'),
-    lot: formData.get('lot'),
-    paymentPlan: formData.get('paymentPlan'),
-    message: formData.get('message') || '',
-    idioma: 'english'
+    telefono: formData.get('telefono'),
+    lote: formData.get('lote'),
+    plan: formData.get('plan'),
+    mensaje: formData.get('mensaje') || '',
+    idioma: 'español'
   };
 
+  console.log('📤 Datos a enviar:', data);
+  console.log('🌐 URL destino:', WEB_APP_URL);
+
   try {
+    console.log('⏳ Enviando fetch...');
+    
     const response = await fetch(WEB_APP_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
     });
 
-    const result = await response.json();
+    console.log('✅ Response recibido:', response);
     
-    if (result.success) {
-      submitBtn.textContent = '✓ Reservation Sent';
-      submitBtn.style.background = '#10b981';
-      submitBtn.style.opacity = '1';
-      
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'generate_lead', {
-          event_category: 'Form',
-          event_label: data.lot,
-          value: 250000000
-        });
-      }
-
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead', {
-          content_name: data.lot,
-          content_category: 'Lot Reservation'
-        });
-      }
-      
-      setTimeout(() => {
-        window.location.href = '/thanks/';
-      }, 1500);
-    } else {
-      throw new Error(result.message);
+    submitBtn.textContent = '✓ Reserva Enviada';
+    submitBtn.style.background = '#10b981';
+    submitBtn.style.opacity = '1';
+    
+    console.log('🎉 Formulario enviado exitosamente');
+    
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'generate_lead', {
+        event_category: 'Formulario',
+        event_label: data.lote,
+        value: 250000000
+      });
+      console.log('📊 Evento GA enviado');
     }
 
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', {
+        content_name: data.lote,
+        content_category: 'Reserva Lote'
+      });
+      console.log('📊 Evento FB Pixel enviado');
+    }
+    
+    setTimeout(() => {
+      console.log('🔄 Redirigiendo...');
+      window.location.href = '/en/thanks/';
+    }, 1500);
+
   } catch (error) {
-    console.error('Error:', error);
-    submitBtn.textContent = '✗ Error - Try again';
+    console.error('❌ ERROR:', error);
+    console.error('Error detalles:', {
+      message: error.message,
+      stack: error.stack
+    });
+    
+    submitBtn.textContent = '✗ Error - Intenta de nuevo';
     submitBtn.style.background = '#ef4444';
     submitBtn.disabled = false;
     submitBtn.style.cursor = 'pointer';
     
     setTimeout(() => {
-      submitBtn.textContent = originalText;
+      submitBtn.textContent = textoOriginal;
       submitBtn.style.background = '';
       submitBtn.style.opacity = '1';
     }, 3000);
   }
 });
 </script>
+
   </main>
 
   
