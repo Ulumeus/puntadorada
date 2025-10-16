@@ -51,11 +51,28 @@ body {
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-}
 
-.logo-svg {
-  height: 72px;
-  width: auto;
+  .logo-container{
+    position: relative;
+
+    a{
+      display: grid;
+      justify-content: center;
+      text-decoration: none;
+      
+      .logo-svg {
+        width: 200px;
+      }
+
+      span{
+        display: inline-block;
+        color: var(--dark-gold);
+        font-size: 22px;
+        font-family: 'Cormorant Garamond', serif;
+        margin-inline: auto;
+      }
+    }
+  }
 }
 
 .nav-menu {
