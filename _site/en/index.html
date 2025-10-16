@@ -157,7 +157,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   "logo": "http://localhost:4000/img/logo-punta-dorada.png",
   "image": "http://localhost:4000/img/punta-dorada-aerial.jpg",
   "telephone": "+57 300 123 4567",
-  "email": "contacto@puntadoradabaru.com",
+  "email": "info@puntadoradabaru.com",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Barú",
@@ -1065,9 +1065,18 @@ Those who join in this phase secure a more favorable entry point, with projected
       Only 51 lots available. Complete the form to receive detailed information.
     </p>
 
-    <form class="waitlist-form" id="waitlistForm">
+    <form class="waitlist-form" id="waitlistForm" 
+          name="reservas-lotes" 
+          method="POST" 
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action="/gracias">
+      
+      <!-- Campo anti-spam oculto -->
+      <input type="hidden" name="bot-field">
+      <input type="hidden" name="form-name" value="reservas-lotes">
       <div class="form-group">
-        <input type="text" class="form-input" name="nombre" placeholder="First Name" required>
+        <input type="text" class="form-input" name="nombre" placeholder="Name" required>
         <input type="text" class="form-input" name="apellido" placeholder="Last Name" required>
       </div>
       <div class="form-group">
@@ -1197,7 +1206,7 @@ Those who join in this phase secure a more favorable entry point, with projected
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                         </svg>
-                        <a href="mailto:contacto@puntadoradabaru.com">contacto@puntadoradabaru.com</a>
+                        <a href="mailto:info@puntadoradabaru.com">info@puntadoradabaru.com</a>
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

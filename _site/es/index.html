@@ -157,7 +157,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   "logo": "http://localhost:4000/img/logo-punta-dorada.png",
   "image": "http://localhost:4000/img/punta-dorada-aerial.jpg",
   "telephone": "+57 300 123 4567",
-  "email": "contacto@puntadoradabaru.com",
+  "email": "info@puntadoradabaru.com",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Barú",
@@ -1062,15 +1062,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
   </div>
 </section>
-
-<!-- Contact Form -->
 <section class="form-section" id="reservar">
   <div class="container">
     <h2 class="section-title" style="color: white;">Reserva tu Lote Ahora</h2>
     <p class="section-description" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto;">
       Solo 51 lotes disponibles. Completa el formulario para recibir información detallada.
     </p>
-
     <form class="waitlist-form" id="waitlistForm">
       <div class="form-group">
         <input type="text" class="form-input" name="nombre" placeholder="Nombre" required>
@@ -1083,18 +1080,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="form-group">
         <select class="form-select form-input" name="lote" required>
           <option value="">Lote de interés</option>
-          <option value="150c">Lote 150 m² Centro - $250M (28 disp.)</option>
-          <option value="150e">Lote 150 m² Esquina - $260M (10 disp.)</option>
-          <option value="160c">Lote 160 m² Centro - $270M (4 disp.)</option>
-          <option value="160e">Lote 160 m² Esquina - $285M (2 disp.)</option>
-          <option value="200c">Lote 200 m² Centro - $300M (13 disp.)</option>
-          <option value="200e">Lote 200 m² Esquina - $315M (2 disp.)</option>
+          <option value="Lote 150 m² Centro - $250M (28 disp.)">Lote 150 m² Centro - $250M (28 disp.)</option>
+          <option value="Lote 150 m² Esquina - $260M (10 disp.)">Lote 150 m² Esquina - $260M (10 disp.)</option>
+          <option value="Lote 160 m² Centro - $270M (4 disp.)">Lote 160 m² Centro - $270M (4 disp.)</option>
+          <option value="Lote 160 m² Esquina - $285M (2 disp.)">Lote 160 m² Esquina - $285M (2 disp.)</option>
+          <option value="Lote 200 m² Centro - $300M (13 disp.)">Lote 200 m² Centro - $300M (13 disp.)</option>
+          <option value="Lote 200 m² Esquina - $315M (2 disp.)">Lote 200 m² Esquina - $315M (2 disp.)</option>
         </select>
         <select class="form-select form-input" name="plan">
           <option value="">Plan de pago preferido</option>
-          <option value="contado">Pago de contado (descuento especial)</option>
-          <option value="30-50-20">30% inicial + 50% (24 meses) + 20% entrega</option>
-          <option value="personalizado">Plan personalizado</option>
+          <option value="Pago de contado (descuento especial)">Pago de contado (descuento especial)</option>
+          <option value="30% inicial + 50% (24 meses) + 20% entrega">30% inicial + 50% (24 meses) + 20% entrega</option>
+          <option value="Plan personalizado">Plan personalizado</option>
         </select>
       </div>
       <div class="form-group">
@@ -1106,6 +1103,90 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </form>
   </div>
 </section>
+
+<!-- IMPORTANTE: Reemplaza con el ID de tu formulario -->
+<!-- Lo encuentras en la URL: forms.google.com/d/e/[ESTE_ID]/viewform -->
+<script>
+  const GOOGLE_FORM_CONFIG = {
+    formId: '1FAIpQLSf7sRrQbXMaDcMS2_octU-WJn7kjJkMAtMka-EaPEVrFk-nyA',
+  
+  fields: {
+    nombre: 'entry.190572529',
+    apellido: 'entry.839140675',
+    email: 'entry.1915628032',
+    telefono: 'entry.1837414571',
+    lote: 'entry.1429268860',
+    plan: 'entry.1486776839',
+    mensaje: 'entry.331519757'
+  }
+};
+
+document.getElementById('waitlistForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = e.target.querySelector('.form-submit');
+  const textoOriginal = submitBtn.textContent;
+  
+  submitBtn.textContent = 'Enviando...';
+  submitBtn.disabled = true;
+  submitBtn.style.cursor = 'not-allowed';
+  submitBtn.style.opacity = '0.7';
+
+  const formData = new FormData(e.target);
+  const googleFormData = new URLSearchParams();
+
+  Object.entries(GOOGLE_FORM_CONFIG.fields).forEach(([campoHTML, entryId]) => {
+    const valor = formData.get(campoHTML);
+    if (valor) {
+      googleFormData.append(entryId, valor);
+    }
+  });
+
+  try {
+    await fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/formResponse`, {
+      method: 'POST',
+      body: googleFormData,
+      mode: 'no-cors'
+    });
+
+    submitBtn.textContent = '✓ Reserva Enviada';
+    submitBtn.style.background = '#10b981';
+    submitBtn.style.opacity = '1';
+    
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'generate_lead', {
+        event_category: 'Formulario',
+        event_label: formData.get('lote'),
+        value: 250000000
+      });
+    }
+
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', {
+        content_name: formData.get('lote'),
+        content_category: 'Reserva Lote'
+      });
+    }
+    
+    setTimeout(() => {
+      window.location.href = '/gracias.html?lote=' + encodeURIComponent(formData.get('lote'));
+    }, 1500);
+
+  } catch (error) {
+    console.error('Error al enviar:', error);
+    submitBtn.textContent = '✗ Error - Intenta de nuevo';
+    submitBtn.style.background = '#ef4444';
+    submitBtn.disabled = false;
+    submitBtn.style.cursor = 'pointer';
+    
+    setTimeout(() => {
+      submitBtn.textContent = textoOriginal;
+      submitBtn.style.background = '';
+      submitBtn.style.opacity = '1';
+    }, 3000);
+  }
+});
+</script>
   </main>
 
   
@@ -1203,7 +1284,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                         </svg>
-                        <a href="mailto:contacto@puntadoradabaru.com">contacto@puntadoradabaru.com</a>
+                        <a href="mailto:info@puntadoradabaru.com">info@puntadoradabaru.com</a>
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
