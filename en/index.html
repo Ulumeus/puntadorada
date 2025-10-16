@@ -632,7 +632,7 @@ document.getElementById('waitlistForm')?.addEventListener('submit', async (e) =>
     }
     
     setTimeout(() => {
-      window.location.href = '/thanks.html?lot=' + encodeURIComponent(formData.get('lot'));
+      window.location.href = '/thanks/?lot=' + encodeURIComponent(formData.get('lot'));
     }, 1500);
 
   } catch (error) {

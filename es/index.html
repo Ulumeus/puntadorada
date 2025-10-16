@@ -638,7 +638,7 @@ document.getElementById('waitlistForm')?.addEventListener('submit', async (e) =>
     }
     
     setTimeout(() => {
-      window.location.href = '/gracias.html?lote=' + encodeURIComponent(formData.get('lote'));
+      window.location.href = '/gracias/?lote=' + encodeURIComponent(formData.get('lote'));
     }, 1500);
 
   } catch (error) {
