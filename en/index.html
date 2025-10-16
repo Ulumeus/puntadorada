@@ -567,22 +567,9 @@ lifestyle:
     </form>
   </div>
 </section>
-<!-- IMPORTANT: Replace with your form ID -->
-<!-- Find it in the URL: forms.google.com/d/e/[THIS_ID]/viewform -->
+
 <script>
-const GOOGLE_FORM_CONFIG = {
-  formId: '1FAIpQLSf7sRrQbXMaDcMS2_octU-WJn7kjJkMAtMka-EaPEVrFk-nyA',
-  
-  fields: {
-    firstName: 'entry.190572529',    
-    lastName: 'entry.839140675',     
-    email: 'entry.1915628032',       
-    phone: 'entry.1837414571',       
-    lot: 'entry.1429268860',         
-    paymentPlan: 'entry.1486776839', 
-    message: 'entry.331519757'       
-  }
-};
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyL9_uu2qA06kO7Lblj4f8MCeyKoRAYuPExWilHBfH1sAYqwEL2FTtMaazI3aj5nM7H/exec';
 
 document.getElementById('waitlistForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -596,52 +583,63 @@ document.getElementById('waitlistForm')?.addEventListener('submit', async (e) =>
   submitBtn.style.opacity = '0.7';
 
   const formData = new FormData(e.target);
-  const googleFormData = new URLSearchParams();
-
-  Object.entries(GOOGLE_FORM_CONFIG.fields).forEach(([htmlField, entryId]) => {
-    const value = formData.get(htmlField);
-    if (value) {
-      googleFormData.append(entryId, value);
-    }
-  });
+  
+  const data = {
+    firstName: formData.get('firstName'),
+    lastName: formData.get('lastName'),
+    email: formData.get('email'),
+    phone: formData.get('phone'),
+    lot: formData.get('lot'),
+    paymentPlan: formData.get('paymentPlan'),
+    message: formData.get('message') || '',
+    idioma: 'english'
+  };
 
   try {
-    await fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/formResponse`, {
+    const response = await fetch(WEB_APP_URL, {
       method: 'POST',
-      body: googleFormData,
-      mode: 'no-cors' 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
     });
 
-    submitBtn.textContent = '✓ Reservation Sent';
-    submitBtn.style.background = '#10b981';
-    submitBtn.style.opacity = '1';
+    const result = await response.json();
     
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'generate_lead', {
-        event_category: 'Form',
-        event_label: formData.get('lot'),
-        value: 250000000
-      });
-    }
+    if (result.success) {
+      submitBtn.textContent = '✓ Reservation Sent';
+      submitBtn.style.background = '#10b981';
+      submitBtn.style.opacity = '1';
+      
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'generate_lead', {
+          event_category: 'Form',
+          event_label: data.lot,
+          value: 250000000
+        });
+      }
 
-    if (typeof fbq !== 'undefined') {
-      fbq('track', 'Lead', {
-        content_name: formData.get('lot'),
-        content_category: 'Lot Reservation'
-      });
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+          content_name: data.lot,
+          content_category: 'Lot Reservation'
+        });
+      }
+      
+      setTimeout(() => {
+        window.location.href = '/thanks/';
+      }, 1500);
+    } else {
+      throw new Error(result.message);
     }
-    
-    setTimeout(() => {
-      window.location.href = '/thanks/?lot=' + encodeURIComponent(formData.get('lot'));
-    }, 1500);
 
   } catch (error) {
-    console.error('Error sending:', error);
+    console.error('Error:', error);
     submitBtn.textContent = '✗ Error - Try again';
     submitBtn.style.background = '#ef4444';
     submitBtn.disabled = false;
     submitBtn.style.cursor = 'pointer';
-
+    
     setTimeout(() => {
       submitBtn.textContent = originalText;
       submitBtn.style.background = '';
