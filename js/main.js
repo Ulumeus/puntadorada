@@ -25,7 +25,6 @@ const PuntaDorada = (() => {
         video: '.hero-video',
         faqQuestion: '.faq-question',
         faqItem: '.faq-item',
-        form: '#waitlistForm',
         fadeIn: '.fade-in',
         lazyImage: 'img[data-src]',
         scrollToTop: '#scrollToTop',
@@ -327,79 +326,6 @@ const PuntaDorada = (() => {
             Utils.$$(SELECTORS.faqItem).forEach(item => {
                 item.classList.remove('active');
             });
-        },
-    };
-
-    /* ==========================================
-       FORM MODULE
-       ========================================== */
-    const Form = {
-        form: null,
-
-        init() {
-            this.form = Utils.$(SELECTORS.form);
-            if (!this.form) return;
-
-            this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        },
-
-        handleSubmit(event) {
-            event.preventDefault();
-
-            const formData = new FormData(this.form);
-            const data = Object.fromEntries(formData.entries());
-
-            // Validación básica
-            if (!this.validate(data)) return;
-
-            // Aquí integrar con tu backend
-            this.sendData(data);
-        },
-
-        validate(data) {
-            // Agregar validaciones necesarias
-            const requiredFields = ['name', 'email', 'phone'];
-            
-            for (const field of requiredFields) {
-                if (!data[field]?.trim()) {
-                    this.showError(`Por favor completa el campo ${field}`);
-                    return false;
-                }
-            }
-
-            return true;
-        },
-
-        async sendData(data) {
-            try {
-                // Ejemplo de integración con API
-                // const response = await fetch('/api/waitlist', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(data)
-                // });
-
-                console.log('Datos del formulario:', data);
-                this.showSuccess();
-                this.form.reset();
-
-            } catch (error) {
-                console.error('Error al enviar formulario:', error);
-                this.showError('Hubo un error. Por favor intenta nuevamente.');
-            }
-        },
-
-        showSuccess() {
-            const lang = document.documentElement.lang || 'es';
-            const message = lang === 'es' 
-                ? '¡Gracias por tu interés! Te contactaremos pronto con información detallada sobre los lotes disponibles.'
-                : 'Thank you for your interest! We will contact you soon with detailed information about available lots.';
-            
-            alert(message); // Reemplazar con modal personalizado
-        },
-
-        showError(message) {
-            alert(message); // Reemplazar con notificación personalizada
         },
     };
 
