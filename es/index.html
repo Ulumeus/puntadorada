@@ -540,7 +540,17 @@ lifestyle:
       Solo 51 lotes disponibles. Completa el formulario para recibir información detallada.
     </p>
 
-    <form class="waitlist-form" id="waitlistForm">
+    <!-- Solo agrega data-netlify="true" -->
+    <form class="waitlist-form" id="waitlistForm" 
+          name="reservas-lotes" 
+          method="POST" 
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action="/gracias">
+      
+      <!-- Campo anti-spam oculto -->
+      <input type="hidden" name="bot-field">
+      <input type="hidden" name="form-name" value="reservas-lotes">
       <div class="form-group">
         <input type="text" class="form-input" name="nombre" placeholder="Nombre" required>
         <input type="text" class="form-input" name="apellido" placeholder="Apellido" required>
